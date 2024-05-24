@@ -4,6 +4,7 @@ import AppAside from '@/components/AppAside.vue';
 
 <template>
     <AppAside />
+    <router-view />
     <!-- component -->
 </template>
 
