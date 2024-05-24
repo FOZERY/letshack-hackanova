@@ -91,7 +91,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <router-link to="" class="nav-link">
+                        <a class="nav-link">
                             <svg
                                 class="stroke-hover"
                                 width="24"
@@ -114,7 +114,7 @@
                                 ></path>
                             </svg>
                             <p>Мой профиль</p>
-                        </router-link>
+                        </a>
                     </li>
 
                     <li class="nav-item">
