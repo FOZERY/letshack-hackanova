@@ -1,4 +1,35 @@
-<script setup></script>
+<script setup>
+import TagButton from '@/components/TagButton.vue';
+import AppButton from '@/components/AppButton.vue';
+
+import { useUserStore } from '@/stores/userStore.js';
+import { useTagStore } from '@/stores/tagStore.js';
+
+import { onMounted, ref } from 'vue';
+
+const userStore = useUserStore();
+const tagStore = useTagStore();
+
+const changingTag = ref(false);
+const value = ref(0);
+
+userStore.fetchUser();
+tagStore.fetchTags();
+
+const addTagToUser = (tag) => {
+    tag.isAdded = true;
+};
+
+const deleteTagFromUser = (tag) => {
+    tag.isAdded = false;
+};
+
+tagStore.tags.forEach((tag) => {
+    if (userStore.user.tags.some((userTag) => tag.id === userTag.id)) {
+        tag.isAdded = true;
+    }
+});
+</script>
 
 <template>
     <div class="account__user">
@@ -98,12 +129,31 @@
                     <!--         Наш код           -->
 
                     <hr />
-                    <p class="body-text-medium mt-4">Специализация</p>
-                    <div class="account-about body-text-medium mb-4">
-                        Я студент 2 курса специальности CS. Знаю HTML, CSS,
-                        JavaScript, делал проект на Vue.js и PHP, немного изучал
-                        C/C++, знаком с Docker, Git
+                    <p class="body-text-medium mt-8">Специализация</p>
+                    <div class="flex mt-8 gap-5">
+                        <TagButton
+                            v-for="tag in tagStore.getAddedTags"
+                            :key="tag.id"
+                            class="bg-white"
+                            :can-delete="changingTag"
+                            v-bind="tag"
+                            @delete-tag-from-user="deleteTagFromUser(tag)"
+                        />
                     </div>
+                    <div v-if="changingTag" class="flex mt-8 gap-5">
+                        <TagButton
+                            v-for="tag in tagStore.getNotAddedTags"
+                            :key="tag.id"
+                            class="bg-white"
+                            v-bind="tag"
+                            @click="addTagToUser(tag)"
+                        />
+                    </div>
+                    <AppButton
+                        class="add-button mt-4"
+                        @click="changingTag = !changingTag"
+                        >Изменить</AppButton
+                    >
                 </div>
             </div>
         </div>
