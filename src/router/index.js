@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import App from '@/App.vue';
-import TeamProfile from '@/components/TeamProfile.vue';
+import PageTeamProfile from '@/pages/PageTeamProfile.vue';
+import PageUserProfile from '@/pages/PageUserProfile.vue';
+import PageMain from '@/pages/PageMain.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,12 +9,17 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            component: App,
+            component: PageMain,
         },
         {
-            path: '/team',
+            path: '/personal/profile',
+            name: 'profile',
+            component: PageUserProfile,
+        },
+        {
+            path: '/personal/team',
             name: 'team',
-            component: TeamProfile,
+            component: PageTeamProfile,
         },
     ],
 });

@@ -1,10 +1,14 @@
 <script setup>
-import AppAside from '@/components/AppAside.vue';
+import TheAside from '@/components/TheAside.vue';
 </script>
 
 <template>
-    <AppAside />
-    <!-- component -->
+    <div class="profile">
+        <TheAside />
+        <div class="content">
+            <router-view />
+        </div>
+    </div>
 </template>
 
 <style scoped></style>
