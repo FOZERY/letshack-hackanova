@@ -18,7 +18,7 @@ const router = createRouter({
         },
         {
             path: '/personal/team',
-            name: 'team',
+            name: 'teams',
             component: PageTeamProfile,
         },
     ],

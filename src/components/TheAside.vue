@@ -59,7 +59,7 @@
                 data-accordion="false"
             >
                 <li class="nav-item active">
-                    <router-link to="home" class="nav-link">
+                    <router-link :to="{ name: 'home' }" class="nav-link">
                         <svg
                             class="stroke-hover"
                             width="24"
@@ -92,7 +92,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <router-link to="profile" class="nav-link">
+                    <router-link :to="{ name: 'profile' }" class="nav-link">
                         <svg
                             class="stroke-hover"
                             width="24"
@@ -119,7 +119,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <router-link to="teams" class="nav-link">
+                    <router-link :to="{ name: 'teams' }" class="nav-link">
                         <svg
                             class="stroke-hover"
                             width="24"
