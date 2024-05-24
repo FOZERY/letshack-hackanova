@@ -1,14 +1,10 @@
 <script setup>
-
-import AppAside from "@/components/AppAside.vue";
+import AppAside from '@/components/AppAside.vue';
 </script>
 
 <template>
-  <AppAside/>
-  <!-- component -->
-
+    <AppAside />
+    <!-- component -->
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
