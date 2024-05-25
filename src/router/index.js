@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import PageTeamProfile from '@/pages/PageTeamProfile.vue';
+import PageTeamProfileEdit from '@/pages/PageTeamProfileEdit.vue';
+import PageTeams from '@/pages/PageTeams.vue';
 import PageUserProfile from '@/pages/PageUserProfile.vue';
 import PageMain from '@/pages/PageMain.vue';
 
@@ -17,9 +19,20 @@ const router = createRouter({
             component: PageUserProfile,
         },
         {
-            path: '/personal/team',
+            path: '/personal/teams',
             name: 'teams',
-            component: PageTeamProfile,
+            component: PageTeams,
+        },
+        {
+            path: '/personal/team',
+            children: [
+                { path: '', name: 'teamprofile', component: PageTeamProfile },
+                {
+                    path: 'edit',
+                    name: 'teamedit',
+                    component: PageTeamProfileEdit,
+                },
+            ],
         },
     ],
 });

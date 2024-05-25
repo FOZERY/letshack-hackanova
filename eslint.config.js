@@ -8,5 +8,11 @@ export default [
         rules: {
             semi: 'error',
         },
+        'prettier/prettier': [
+            'error',
+            {
+                singleQuote: true,
+            },
+        ],
     },
 ];
