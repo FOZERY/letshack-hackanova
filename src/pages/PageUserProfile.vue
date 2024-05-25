@@ -1,78 +1,22 @@
 <script setup>
 import TagButton from '@/components/TagButton.vue';
-import AppButton from '@/components/AppButton.vue';
 
 import { useUserStore } from '@/stores/userStore.js';
-import { useTagStore } from '@/stores/tagStore.js';
-
-import { isReactive, onMounted, ref, toRaw, toRef, watch } from 'vue';
-
-import cloneDeep from 'lodash.clonedeep';
 
 const userStore = useUserStore();
-const tagStore = useTagStore();
 
-const isChangingTag = ref(false);
-
-let bufferTags = [];
-
-const addTagToUser = (tag) => {
-    tag.isAdded = true;
-};
-
-const deleteTagFromUser = (tag) => {
-    tag.isAdded = false;
-};
-
-async function simulateAsyncFunction() {
-    // Имитация асинхронной операции
-    await new Promise((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, 2000);
-    });
-
-    return 'Результат асинхронной функции';
-}
-
-const isTagsLoading = ref(false);
-const acceptTagsToUser = async () => {
-    isTagsLoading.value = true;
-    await simulateAsyncFunction();
-    const error = true;
-    if (!error) {
-        tagStore.tags = cloneDeep(bufferTags);
-    }
-    isChangingTag.value = false;
-    isTagsLoading.value = false;
-};
-
-const startChanging = () => {
-    isChangingTag.value = true;
-};
-
-onMounted(() => {
-    userStore.fetchUser();
-    tagStore.fetchTags();
-
-    tagStore.tags = tagStore.tags.map((tag) => ({
-        ...tag,
-        isAdded: userStore.user.tags.some((userTag) => tag.id === userTag.id),
-    }));
-
-    bufferTags = cloneDeep(tagStore.tags);
-});
+userStore.fetchUser();
 </script>
 
 <template>
     <div class="account__user">
         <div class="content-header">
             <h3>Мой профиль</h3>
-            <a
-                href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/profile/edit"
+            <router-link
+                :to="{ name: 'profileEdit' }"
                 class="button button__block button__filled button__medium"
-                >Редактировать профиль</a
-            >
+                >Редактировать профиль
+            </router-link>
         </div>
         <div class="account-layout">
             <div class="account-wrapper">
@@ -80,20 +24,30 @@ onMounted(() => {
                     <div class="account-icon">
                         <img
                             src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/3980546947_1716481621.jpg"
-                            alt="Дмитрий Тагиев"
+                            :alt="`${userStore.user.name} ${userStore.user.surname}`"
                         />
-                    </div>
-                    <div class="mt-5">
-                        <p>Ищет команду</p>
                     </div>
                 </div>
                 <div class="account-content">
-                    <h5>Дмитрий Тагиев</h5>
+                    <h5>
+                        {{ `${userStore.user.name} ${userStore.user.surname}` }}
+                    </h5>
 
                     <div class="account-about body-text-medium mb-4">
-                        Белгород
+                        {{ userStore.user.city }}
                     </div>
 
+                    <div
+                        class="search_team flex justify-between items-center w-full border rounded-xl"
+                    >
+                        <span>Ищу команду</span>
+                        <form
+                            action=""
+                            class="flex justify-center items-center"
+                        >
+                            <input type="checkbox" class="w-7 h-7" />
+                        </form>
+                    </div>
                     <hr />
 
                     <div class="info-list body-text-medium">
@@ -120,7 +74,7 @@ onMounted(() => {
                                     stroke-linejoin="round"
                                 ></path>
                             </svg>
-                            fozery@yandex.ru
+                            {{ userStore.user.email }}
                         </div>
                         <div class="info-item">
                             <svg
@@ -138,7 +92,12 @@ onMounted(() => {
                                     stroke-linejoin="round"
                                 ></path>
                             </svg>
-                            +7 (904) 080-64-56
+                            {{ userStore.user.phone }}
+                        </div>
+                        <div class="info-item">
+                            <a class="color" href="#">{{
+                                userStore.user.telegramUrl
+                            }}</a>
                         </div>
                     </div>
 
@@ -147,21 +106,19 @@ onMounted(() => {
                         Опыт участия в хакатонах
                     </p>
                     <div class="account-about body-text-medium mb-4">
-                        Нет опыта участия в хакатонах
+                        {{ userStore.user.hackExperience }}
                     </div>
 
                     <hr />
                     <p class="body-text-medium mt-4">Образование</p>
                     <div class="account-about body-text-medium mb-4">
-                        Студент 2 курса IT-специальности
+                        {{ userStore.user.education }}
                     </div>
 
                     <hr />
                     <p class="body-text-medium mt-4">О себе</p>
                     <div class="account-about body-text-medium mb-4">
-                        Я студент 2 курса специальности CS. Знаю HTML, CSS,
-                        JavaScript, делал проект на Vue.js и PHP, немного изучал
-                        C/C++, знаком с Docker, Git
+                        {{ userStore.user.about }}
                     </div>
 
                     <!--         Наш код           -->
@@ -170,44 +127,11 @@ onMounted(() => {
                     <p class="body-text-medium mt-8">Специализация</p>
                     <div class="flex mt-8 gap-5">
                         <TagButton
-                            v-for="tag in tagStore.getAddedTags"
+                            v-for="tag in userStore.user.tags"
                             :key="tag.id"
-                            class="bg-gray-original select-none"
-                            :can-delete="isChangingTag"
+                            class="select-none"
                             v-bind="tag"
-                            @delete-tag-from-user="deleteTagFromUser(tag)"
                         />
-                    </div>
-                    <div v-if="isChangingTag" class="flex mt-8 gap-5">
-                        <TagButton
-                            v-for="tag in tagStore.getNotAddedTags"
-                            :key="tag.id"
-                            class="bg-white select-none cursor-pointer"
-                            v-bind="tag"
-                            @click="addTagToUser(tag)"
-                        />
-                    </div>
-                    <div>
-                        <div v-if="!isTagsLoading" class="mt-4">
-                            <AppButton
-                                v-if="!isChangingTag"
-                                class="add-button"
-                                @click="startChanging"
-                                >Изменить
-                            </AppButton>
-                            <AppButton
-                                v-else
-                                class="add-button"
-                                @click="acceptTagsToUser"
-                                >Принять
-                            </AppButton>
-                        </div>
-                        <div v-else class="mt-4">
-                            <img
-                                class="ml-10"
-                                src="/icons8-загрузка-в-форме-круга.gif"
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
@@ -215,4 +139,9 @@ onMounted(() => {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.search_team {
+    padding: 12px 11px;
+    font-size: 18px;
+}
+</style>

@@ -1,5 +1,5 @@
 <script setup>
-import Input from '@/components/Input.vue';
+import AppInput from '@/components/AppInput.vue';
 import Textarea from '@/components/Textarea.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
 
@@ -58,12 +58,12 @@ teamStore.fetchTeam();
                     <div class="column">
                         <h5>Основная информация</h5>
                         <div class="form-block">
-                            <Input
+                            <AppInput
                                 v-model="teamStore.team.name"
                                 title="Название команды"
                                 name="teamName"
                             />
-                            <Input
+                            <AppInput
                                 v-model="teamStore.team.link"
                                 title="Ссылка на чат команды"
                                 name="link"
@@ -91,8 +91,8 @@ teamStore.fetchTeam();
                                     />
                                 </div>
                                 <input
-                                    type="hidden"
                                     id="logo-uploaded"
+                                    type="hidden"
                                     name="logo-uploaded"
                                     value="1"
                                 />
@@ -103,9 +103,9 @@ teamStore.fetchTeam();
                                     >
                                         <label>
                                             <input
+                                                id="logo"
                                                 type="file"
                                                 class="custom-file-input"
-                                                id="logo"
                                                 name="logo"
                                                 accept="image/jpeg"
                                             />
