@@ -44,22 +44,10 @@ export const useTagStore = defineStore('tagStore', {
     }),
     getters: {
         getAddedTags: (state) => {
-            const addedTags = [];
-            state.tags.forEach((tag) => {
-                if (tag.isAdded) {
-                    addedTags.push(tag);
-                }
-            });
-            return addedTags;
+            return state.tags.filter((tag) => tag.isAdded);
         },
         getNotAddedTags: (state) => {
-            const addedTags = [];
-            state.tags.forEach((tag) => {
-                if (!tag.isAdded) {
-                    addedTags.push(tag);
-                }
-            });
-            return addedTags;
+            return state.tags.filter((tag) => !tag.isAdded);
         },
     },
     actions: {
