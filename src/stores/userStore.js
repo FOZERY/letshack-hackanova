@@ -4,6 +4,7 @@ const userData = {
     id: 1,
     email: 'email@test.ru',
     phone: 'phone',
+    requestCommand: true,
     tags: [
         {
             id: 1,
@@ -25,5 +26,6 @@ export const useUserStore = defineStore('userStore', {
         async fetchUser() {
             this.user = userData;
         },
+        async changeUserStatus() {},
     },
 });
