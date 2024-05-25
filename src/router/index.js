@@ -3,6 +3,7 @@ import PageTeamProfile from '@/pages/PageTeamProfile.vue';
 import PageUserProfile from '@/pages/PageUserProfile.vue';
 import PageMain from '@/pages/PageMain.vue';
 import PageUserProfileSettings from '@/pages/PageUserProfileSettings.vue';
+import PageTeamProfileEdit from '@/pages/PageTeamProfileEdit.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,7 +26,7 @@ const router = createRouter({
         {
             path: '/personal/team',
             children: [
-                { path: '', name: 'teamprofile', component: PageTeamProfile },
+                { path: '', name: 'teams', component: PageTeamProfile },
                 {
                     path: 'edit',
                     name: 'teamedit',
