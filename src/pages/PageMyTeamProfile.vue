@@ -1,13 +1,15 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import Input from '@/components/Input.vue';
-import Textarea from '@/components/Textarea.vue';
+import { storeToRefs } from 'pinia';
+import AppButton from '@/components/AppButton.vue';
+import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
+import TeamPanel from '@/components/TeamPanel.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
 
 const teamStore = useTeamStore();
-console.log(useRoute().params);
 
 teamStore.fetchTeam();
+const { findTeamById } = storeToRefs(teamStore);
+const team = findTeamById.value(2);
 </script>
 
 <template>
@@ -89,4 +91,11 @@ teamStore.fetchTeam();
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.tab-pane {
+    display: none;
+}
+.tab-pane.active {
+    display: block;
+}
+</style>

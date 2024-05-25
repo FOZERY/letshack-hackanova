@@ -59,18 +59,7 @@
                         <h5>Все команды</h5>
 
                         <div class="filter">
-                            <div class="form-group">
-                                <label for="team" class="body-text-large"
-                                    >Поиск команды</label
-                                >
-                                <input
-                                    type="text"
-                                    name="search-team"
-                                    class="form-control search-control"
-                                    id="search-team"
-                                    placeholder="Введите название команды"
-                                />
-                            </div>
+                            <Input title="Поиск команды" name="search-team" />
                             <div class="form-group">
                                 <label
                                     for="tasks-filter-selectized"
@@ -112,7 +101,10 @@
                         <br />
 
                         <div class="teams-list">
-                            <TeamsItem />
+                            <TeamsItem
+                                v-for="team in teamStore.team"
+                                v-bind="team"
+                            />
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_2">
@@ -131,4 +123,9 @@
 
 <script setup>
 import TeamsItem from '@/components/TeamsItem.vue';
+import Input from '@/components/Input.vue';
+import { useTeamStore } from '@/stores/teamStore.js';
+
+const teamStore = useTeamStore();
+teamStore.fetchTeam();
 </script>
