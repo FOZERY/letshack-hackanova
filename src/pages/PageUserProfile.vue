@@ -5,16 +5,16 @@ import AppButton from '@/components/AppButton.vue';
 import { useUserStore } from '@/stores/userStore.js';
 import { useTagStore } from '@/stores/tagStore.js';
 
-import { onMounted, ref } from 'vue';
+import { isReactive, onMounted, ref, toRaw, toRef, watch } from 'vue';
+
+import cloneDeep from 'lodash.clonedeep';
 
 const userStore = useUserStore();
 const tagStore = useTagStore();
 
-const changingTag = ref(false);
-const value = ref(0);
+const isChangingTag = ref(false);
 
-userStore.fetchUser();
-tagStore.fetchTags();
+let bufferTags = [];
 
 const addTagToUser = (tag) => {
     tag.isAdded = true;
@@ -24,10 +24,43 @@ const deleteTagFromUser = (tag) => {
     tag.isAdded = false;
 };
 
-tagStore.tags.forEach((tag) => {
-    if (userStore.user.tags.some((userTag) => tag.id === userTag.id)) {
-        tag.isAdded = true;
+async function simulateAsyncFunction() {
+    // Имитация асинхронной операции
+    await new Promise((resolve) => {
+        setTimeout(() => {
+            resolve();
+        }, 2000);
+    });
+
+    return 'Результат асинхронной функции';
+}
+
+const isTagsLoading = ref(false);
+const acceptTagsToUser = async () => {
+    isTagsLoading.value = true;
+    await simulateAsyncFunction();
+    const error = true;
+    if (!error) {
+        tagStore.tags = cloneDeep(bufferTags);
     }
+    isChangingTag.value = false;
+    isTagsLoading.value = false;
+};
+
+const startChanging = () => {
+    isChangingTag.value = true;
+};
+
+onMounted(() => {
+    userStore.fetchUser();
+    tagStore.fetchTags();
+
+    tagStore.tags = tagStore.tags.map((tag) => ({
+        ...tag,
+        isAdded: userStore.user.tags.some((userTag) => tag.id === userTag.id),
+    }));
+
+    bufferTags = cloneDeep(tagStore.tags);
 });
 </script>
 
@@ -43,11 +76,16 @@ tagStore.tags.forEach((tag) => {
         </div>
         <div class="account-layout">
             <div class="account-wrapper">
-                <div class="account-icon">
-                    <img
-                        src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/3980546947_1716481621.jpg"
-                        alt="Дмитрий Тагиев"
-                    />
+                <div>
+                    <div class="account-icon">
+                        <img
+                            src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/3980546947_1716481621.jpg"
+                            alt="Дмитрий Тагиев"
+                        />
+                    </div>
+                    <div class="mt-5">
+                        <p>Ищет команду</p>
+                    </div>
                 </div>
                 <div class="account-content">
                     <h5>Дмитрий Тагиев</h5>
@@ -134,26 +172,43 @@ tagStore.tags.forEach((tag) => {
                         <TagButton
                             v-for="tag in tagStore.getAddedTags"
                             :key="tag.id"
-                            class="bg-white"
-                            :can-delete="changingTag"
+                            class="bg-gray-original select-none"
+                            :can-delete="isChangingTag"
                             v-bind="tag"
                             @delete-tag-from-user="deleteTagFromUser(tag)"
                         />
                     </div>
-                    <div v-if="changingTag" class="flex mt-8 gap-5">
+                    <div v-if="isChangingTag" class="flex mt-8 gap-5">
                         <TagButton
                             v-for="tag in tagStore.getNotAddedTags"
                             :key="tag.id"
-                            class="bg-white"
+                            class="bg-white select-none cursor-pointer"
                             v-bind="tag"
                             @click="addTagToUser(tag)"
                         />
                     </div>
-                    <AppButton
-                        class="add-button mt-4"
-                        @click="changingTag = !changingTag"
-                        >Изменить</AppButton
-                    >
+                    <div>
+                        <div v-if="!isTagsLoading" class="mt-4">
+                            <AppButton
+                                v-if="!isChangingTag"
+                                class="add-button"
+                                @click="startChanging"
+                                >Изменить
+                            </AppButton>
+                            <AppButton
+                                v-else
+                                class="add-button"
+                                @click="acceptTagsToUser"
+                                >Принять
+                            </AppButton>
+                        </div>
+                        <div v-else class="mt-4">
+                            <img
+                                class="ml-10"
+                                src="/icons8-загрузка-в-форме-круга.gif"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
