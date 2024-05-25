@@ -1,9 +1,18 @@
-<script setup></script>
+<script setup>
+import AppButton from '@/components/AppButton.vue';
+import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
+import TeamPanel from '@/components/TeamPanel.vue';
+import { useTeamStore } from '@/stores/teamStore.js';
+
+const teamStore = useTeamStore();
+
+teamStore.fetchTeam();
+</script>
 
 <template>
     <div class="content teams" style="padding-top: 64px">
         <div class="content-header">
-            <h3>Команда</h3>
+            <h3>Команда {{ teamStore.team.name }}</h3>
             <a
                 href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/teams"
                 class="go-back-link button button__block button__light button__medium"
@@ -18,129 +27,72 @@
                     <div class="team-widget-card">
                         <div class="logo">
                             <img
-                                src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/logo/2125506581_1715333426.png"
-                                alt="{SVET}"
+                                src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/logo/2088258667_1716476751.png"
+                                alt="ХакаНова"
                             />
                         </div>
-                        <div class="team-title title-text-small">{SVET}</div>
+                        <div class="team-title title-text-small">
+                            {{ teamStore.team.name }}
+                        </div>
                         <div class="team-date body-text-medium">
-                            Дата создания команды: 10.05.2024 12:30
+                            Дата создания команды: 23.05.2024 18:05
+                        </div>
+                    </div>
+
+                    <div class="team-widget-card">
+                        <h6>Ссылка на чат команды</h6>
+                        <div class="team-chat">
+                            <button type="button" class="copy-button"></button>
+                            <a
+                                target="_blank"
+                                href="https://t.me/+Y1VdzB0ZP5dmYmZi"
+                                class="button button__link button__small"
+                                >Ссылка</a
+                            >
                         </div>
                     </div>
                 </div>
                 <div class="column">
+                    <TeamWidgetCard
+                        :content="teamStore.team.task"
+                        title="Задача"
+                    />
+                    <TeamWidgetCard
+                        :content="teamStore.team.commandDescription"
+                        title="Описание команды"
+                    />
+                    <TeamWidgetCard
+                        :content="teamStore.team.requestMessege"
+                        title="В поиске"
+                    />
                     <div class="team-widget-card">
-                        <h6>Задача</h6>
-                        <div class="body-text-medium"><p></p></div>
-                    </div>
-                    <div class="team-widget-card">
-                        <h6>Описание команды</h6>
-                        <div class="body-text-medium">
-                            Амбициозная команда школьников-разработчиков,
-                            заряженных на победу. Активно участвуем в различных
-                            конкурсах и конференциях, делаем проекты, познаем
-                            новое и двигаемся в перед💥💥
+                        <div class="actions">
+                            <router-link
+                                :to="{ name: 'teamedit' }"
+                                class="edit-profile button button__block button__filled button__medium"
+                            >
+                                Настройки профиля</router-link
+                            >
+                            >
+                            <AppButton
+                                class="team-out button button__block button__outline__white button__medium"
+                            >
+                                Покинуть команду</AppButton
+                            >
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="team-panel">
-                <div class="team-content-header">
-                    <h6>Участники</h6>
-                </div>
-                <div class="team-list">
-                    <a
-                        class="team-item user-profile-link"
-                        data-name="Савелий"
-                        data-surname="Семенычев"
-                        data-age="16"
-                        data-phone="+7 (937) 876-70-14"
-                        data-email="saveliysem123@gmail.com"
-                        data-school=""
-                        data-class=""
-                        data-info="2 года на Python
-1 год на Go"
-                        data-avatar=""
-                    >
-                        <div class="team-item-icon">
-                            <img src="" />
-                        </div>
-
-                        <div class="team-item-name body-text-large">
-                            Савелий Семенычев
-                        </div>
-                    </a>
-
-                    <a
-                        class="team-item user-profile-link"
-                        data-name="Кирилл"
-                        data-surname="Чекурин"
-                        data-age=""
-                        data-phone="+7 (937) 276-57-44"
-                        data-email="kv.chekurin@gmail.com"
-                        data-school=""
-                        data-class=""
-                        data-info=""
-                        data-avatar=""
-                    >
-                        <div class="team-item-icon">
-                            <img src="" />
-                        </div>
-
-                        <div class="team-item-name body-text-large">
-                            Кирилл Чекурин
-                        </div>
-                    </a>
-
-                    <a
-                        class="team-item user-profile-link"
-                        data-name="Игорь"
-                        data-surname="Шибалов"
-                        data-age="16"
-                        data-phone="+7 (937) 886-16-75"
-                        data-email="shibalov_igor@mail.ru"
-                        data-school=""
-                        data-class=""
-                        data-info="Активный участник проектов и хакатонов."
-                        data-avatar="2517912543_1715331765.jpg"
-                    >
-                        <div class="team-item-icon">
-                            <img
-                                src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/2517912543_1715331765.jpg"
-                                alt="Игорь Шибалов"
-                            />
-                        </div>
-
-                        <div class="team-item-name body-text-large">
-                            Игорь Шибалов
-                        </div>
-                    </a>
-
-                    <a
-                        class="team-item user-profile-link"
-                        data-name="Степан"
-                        data-surname="Мокеев"
-                        data-age=""
-                        data-phone="+7 (937) 457-49-65"
-                        data-email="stepan.mokeev160808@gmail.com"
-                        data-school=""
-                        data-class=""
-                        data-info=""
-                        data-avatar=""
-                    >
-                        <div class="team-item-icon">
-                            <img src="" />
-                        </div>
-
-                        <div class="team-item-name body-text-large">
-                            Степан Мокеев
-                        </div>
-                    </a>
                 </div>
             </div>
         </div>
+        <TeamPanel />
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.tab-pane {
+    display: none;
+}
+.tab-pane.active {
+    display: block;
+}
+</style>

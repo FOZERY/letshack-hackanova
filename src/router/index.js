@@ -24,9 +24,16 @@ const router = createRouter({
         },
         {
             path: '/personal/team',
-            name: 'teams',
-            component: PageTeamProfile,
+            children: [
+                { path: '', name: 'teamprofile', component: PageTeamProfile },
+                {
+                    path: 'edit',
+                    name: 'teamedit',
+                    component: PageTeamProfileEdit,
+                },
+            ],
         },
     ],
 });
+
 export default router;
