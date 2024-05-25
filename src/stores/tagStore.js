@@ -38,16 +38,18 @@ const tagsData = [
     },
 ];
 
+const compareTagsFn = (tag1, tag2) => tag1.id > tag2.id;
+
 export const useTagStore = defineStore('tagStore', {
     state: () => ({
         tags: [],
     }),
     getters: {
         getAddedTags: (state) => {
-            return state.tags.filter((tag) => tag.isAdded);
+            return state.tags.filter((tag) => tag.isAdded).sort(compareTagsFn);
         },
         getNotAddedTags: (state) => {
-            return state.tags.filter((tag) => !tag.isAdded);
+            return state.tags.filter((tag) => !tag.isAdded).sort(compareTagsFn);
         },
     },
     actions: {
