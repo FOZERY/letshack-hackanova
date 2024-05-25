@@ -68,7 +68,7 @@ teamStore.fetchTeam();
                     <div class="team-widget-card">
                         <div class="actions">
                             <router-link
-                                :to="{ name: 'teamsedit' }"
+                                :to="{ name: 'teamedit' }"
                                 class="edit-profile button button__block button__filled button__medium"
                             >
                                 Настройки профиля</router-link

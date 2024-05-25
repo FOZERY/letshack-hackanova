@@ -1,7 +1,7 @@
 <template>
     <div class="teams-item" data-name="{SVET}" data-id="">
-        <a
-            href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/team/profile/2125506581"
+        <router-link
+            :to="{ name: 'teamprofile' }"
             class="team-link team-wrapper"
         >
             <div class="team-title">
@@ -12,9 +12,7 @@
                             <img src="@/assets/user-default.png" />
                         </div>
                         <div class="user">
-                            <img
-                                src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/2517912543_1715331765.jpg"
-                            />
+                            <img src="@/assets/user-default.png" />
                         </div>
                         <div class="user">
                             <img src="@/assets/user-default.png" />
@@ -28,7 +26,7 @@
             <div class="team-task">
                 <div class="title body-text-small">{{ task }}</div>
             </div>
-        </a>
+        </router-link>
     </div>
 </template>
 <script setup>
