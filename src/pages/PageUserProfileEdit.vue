@@ -25,9 +25,11 @@ const userIdTest = 6;
 const updateUserData = async () => {
     try {
         const tags = tagStore.getAddedTags.map((tag) => tag.name);
-        console.log(tags);
-        await userStore.updateUserTags(userIdTest, tags);
-        await router.push({ name: 'profile' });
+        userFormData.tags = tags;
+        await userStore.updateUser(userFormData);
+
+        // await userStore.updateUserTags(userIdTest, tags);
+        router.push({ name: 'profile' });
     } catch (e) {
         console.log(e);
     }
@@ -35,9 +37,6 @@ const updateUserData = async () => {
 
 await userStore.fetchUser(userIdTest);
 await tagStore.fetchTags();
-
-console.log(userStore.user);
-console.log(tagStore.tags);
 
 const userFormData = reactive(deepClone(userStore.user));
 
@@ -204,7 +203,7 @@ onMounted(() => {
                                 <div class="flex h-full">
                                     <input
                                         id="radio-two"
-                                        v-model="userFormData.job_search"
+                                        v-model="userFormData.hackathon_search"
                                         type="checkbox"
                                         class="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-700 checked:bg-rose-500 cursor-pointer"
                                     />

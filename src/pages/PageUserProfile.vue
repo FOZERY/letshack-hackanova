@@ -5,8 +5,6 @@ import { useUserStore } from '@/stores/userStore.js';
 import SearchStatus from '@/components/SearchStatus.vue';
 
 const userStore = useUserStore();
-const userIdTest = 6;
-await userStore.fetchUser(userIdTest);
 </script>
 
 <template>
@@ -33,8 +31,7 @@ await userStore.fetchUser(userIdTest);
                                 `${userStore.user.first_name} ${userStore.user.last_name} `
                             }}
                         </h5>
-                        <SearchStatus
-                            v-if="userStore.user.status_team === 'not-in-team'"
+                        <SearchStatus v-if="userStore.user.hackathon_search"
                             >Ищу команду</SearchStatus
                         >
                     </div>

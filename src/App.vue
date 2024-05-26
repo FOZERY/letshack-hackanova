@@ -1,5 +1,14 @@
 <script setup>
 import TheAside from '@/components/TheAside.vue';
+import { useUserStore } from '@/stores/userStore.js';
+import { onMounted } from 'vue';
+
+const userStore = useUserStore();
+
+const userIdTest = 6;
+onMounted(() => {
+    userStore.fetchUser(userIdTest);
+});
 </script>
 
 <template>
@@ -7,7 +16,10 @@ import TheAside from '@/components/TheAside.vue';
         <TheAside />
         <div class="content">
             <Suspense>
-                <router-view />
+                <template #default>
+                    <router-view />
+                </template>
+                <template #fallback> Загрузка... </template>
             </Suspense>
         </div>
     </div>

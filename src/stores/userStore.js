@@ -33,5 +33,22 @@ export const useUserStore = defineStore('userStore', {
                 console.log(e);
             }
         },
+        async updateUser(userData) {
+            try {
+                const response = await fetch(
+                    `/api/user/${userData.id}/update-Profile`,
+                    {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8',
+                        },
+                        body: JSON.stringify(userData),
+                    }
+                );
+                return response;
+            } catch (e) {
+                console.log(e);
+            }
+        },
     },
 });
