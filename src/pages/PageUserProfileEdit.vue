@@ -217,7 +217,7 @@ onMounted(() => {
                         <div class="form-block">
                             <div class="account-photo">
                                 <div class="preview">
-                                    <img src="" alt="Дмитрий Тагиев" />
+                                    <img class="bg-gray-200" src="" alt="" />
                                 </div>
 
                                 <div class="action">

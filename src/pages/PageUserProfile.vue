@@ -23,10 +23,7 @@ await userStore.fetchUser(userIdTest);
             <div class="account-wrapper">
                 <div>
                     <div class="account-icon">
-                        <img
-                            src=""
-                            :alt="`${userStore.user.first_name} ${userStore.user.last_name}`"
-                        />
+                        <img class="bg-gray-200" src="" alt="" />
                     </div>
                 </div>
                 <div class="account-content">

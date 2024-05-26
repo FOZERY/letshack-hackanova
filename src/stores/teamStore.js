@@ -12,11 +12,15 @@ export const useTeamStore = defineStore('teamStore', {
     },
     actions: {
         async fetchTeam() {
-            if (this.teams) return;
-            const data = await fetch('/api/team/get-all-teams').then((res) =>
-                res.json()
-            );
-            this.teams = data;
+            try {
+                if (this.teams) return;
+                const data = await fetch('/api/team/get-all-teams').then(
+                    (res) => res.json()
+                );
+                this.teams = data;
+            } catch (e) {
+                console.log(e);
+            }
         },
         async fetchTeamById(teamId) {
             const data = await fetch(`/api/team/${teamId}/getTeam`).then(
