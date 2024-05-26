@@ -2,11 +2,7 @@
     <div class="content teams" style="padding-top: 64px">
         <div class="content-header">
             <h3>Команды</h3>
-
-            <span
-                class="tippy-tooltip"
-                data-tippy-content="Вы уже состоите в команде"
-            >
+            <div class="button-group">
                 <a
                     href=""
                     class="create-button button button__block button__filled button__medium disabled"
@@ -33,7 +29,14 @@
                     </svg>
                     Создать команду</a
                 >
-            </span>
+
+                <router-link
+                    :to="{ name: 'teamedit' }"
+                    class="edit-profile button button__block button__filled button__medium"
+                >
+                    Настройки профиля</router-link
+                >
+            </div>
         </div>
 
         <div class="teams-layout">
@@ -129,3 +132,12 @@ import { useTeamStore } from '@/stores/teamStore.js';
 const teamStore = useTeamStore();
 teamStore.fetchTeam();
 </script>
+
+<style scoped>
+.button-group {
+    display: flex;
+}
+.button-group a:not(:last-child) {
+    margin-right: 10px;
+}
+</style>

@@ -152,8 +152,12 @@ export const useTeamStore = defineStore('teamStore', {
         team: null,
     }),
     getters: {
-        findTeamById: (state) => {
+        getTeamById: (state) => {
+            if (!state.team) return () => 'gg';
             return (teamId) => state.team.find((team) => team.id === teamId);
+        },
+        getUserById: (state) => {
+            return (userId) => state.users.find((user) => user.id === userId);
         },
     },
     actions: {
@@ -162,8 +166,14 @@ export const useTeamStore = defineStore('teamStore', {
             const data = await fetch('/api/team/get-all-teams').then((res) =>
                 res.json()
             );
-            console.log(data);
-            this.team = teamData;
+            this.team = data;
+        },
+        async fetchTeamById(teamId) {
+            if (this.team !== null) return;
+            const data = await fetch(`/api/team/${teamId}/getTeam`).then(
+                (res) => res.json()
+            );
+            this.team = [data];
         },
     },
 });

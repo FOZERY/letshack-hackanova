@@ -1,19 +1,19 @@
 <script setup>
 import { useRoute } from 'vue-router';
-import Input from '@/components/Input.vue';
-import Textarea from '@/components/Textarea.vue';
+import { storeToRefs } from 'pinia';
+import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
 
 const teamStore = useTeamStore();
-console.log(useRoute().params);
-
+const { getTeamById } = storeToRefs(teamStore);
+const { id } = useRoute().params;
 teamStore.fetchTeam();
 </script>
 
 <template>
     <div class="content teams" style="padding-top: 64px">
         <div class="content-header">
-            <h3>Команда {{ findTeamById(3).name }}</h3>
+            <h3>Команда {{ getTeamById(+id).name }}</h3>
             <a
                 href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/teams"
                 class="go-back-link button button__block button__light button__medium"
@@ -33,7 +33,7 @@ teamStore.fetchTeam();
                             />
                         </div>
                         <div class="team-title title-text-small">
-                            {{ team.name }}
+                            {{ getTeamById(+id).name }}
                         </div>
                         <div class="team-date body-text-medium">
                             Дата создания команды: 23.05.2024 18:05
@@ -55,37 +55,16 @@ teamStore.fetchTeam();
                 </div>
                 <div class="column">
                     <TeamWidgetCard
-                        :content="teamStore.team.task"
+                        :content="getTeamById(+id).task"
                         title="Задача"
                     />
                     <TeamWidgetCard
-                        :content="teamStore.team.commandDescription"
+                        :content="getTeamById(+id).description"
                         title="Описание команды"
                     />
-                    <TeamWidgetCard
-                        :content="teamStore.team.requestMessege"
-                        title="В поиске"
-                    />
-                    <div class="team-widget-card">
-                        <div class="actions">
-                            <router-link
-                                :to="{ name: 'teamedit' }"
-                                class="edit-profile button button__block button__filled button__medium"
-                            >
-                                Настройки профиля</router-link
-                            >
-                            >
-                            <AppButton
-                                class="team-out button button__block button__outline__white button__medium"
-                            >
-                                Покинуть команду</AppButton
-                            >
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-        <TeamPanel />
     </div>
 </template>
 
