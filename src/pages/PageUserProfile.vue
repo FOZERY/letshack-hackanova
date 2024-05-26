@@ -1,59 +1,47 @@
 <script setup>
 import TagButton from '@/components/TagButton.vue';
-import AppButton from '@/components/AppButton.vue';
 
 import { useUserStore } from '@/stores/userStore.js';
-import { useTagStore } from '@/stores/tagStore.js';
-
-import { onMounted, ref } from 'vue';
+import SearchStatus from '@/components/SearchStatus.vue';
 
 const userStore = useUserStore();
-const tagStore = useTagStore();
-
-const changingTag = ref(false);
-const value = ref(0);
 
 userStore.fetchUser();
-tagStore.fetchTags();
-
-const addTagToUser = (tag) => {
-    tag.isAdded = true;
-};
-
-const deleteTagFromUser = (tag) => {
-    tag.isAdded = false;
-};
-
-tagStore.tags.forEach((tag) => {
-    if (userStore.user.tags.some((userTag) => tag.id === userTag.id)) {
-        tag.isAdded = true;
-    }
-});
 </script>
 
 <template>
     <div class="account__user">
         <div class="content-header">
             <h3>Мой профиль</h3>
-            <a
-                href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/profile/edit"
+            <router-link
+                :to="{ name: 'profileEdit' }"
                 class="button button__block button__filled button__medium"
-                >Редактировать профиль</a
-            >
+                >Редактировать профиль
+            </router-link>
         </div>
         <div class="account-layout">
             <div class="account-wrapper">
-                <div class="account-icon">
-                    <img
-                        src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/3980546947_1716481621.jpg"
-                        alt="Дмитрий Тагиев"
-                    />
+                <div>
+                    <div class="account-icon">
+                        <img
+                            src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/3980546947_1716481621.jpg"
+                            :alt="`${userStore.user.name} ${userStore.user.surname}`"
+                        />
+                    </div>
                 </div>
                 <div class="account-content">
-                    <h5>Дмитрий Тагиев</h5>
-
+                    <div class="flex items-center gap-10">
+                        <h5>
+                            {{
+                                `${userStore.user.name} ${userStore.user.surname}`
+                            }}
+                        </h5>
+                        <SearchStatus v-if="userStore.user.requestCommand"
+                            >Ищу команду</SearchStatus
+                        >
+                    </div>
                     <div class="account-about body-text-medium mb-4">
-                        Белгород
+                        {{ userStore.user.city }}
                     </div>
 
                     <hr />
@@ -82,7 +70,7 @@ tagStore.tags.forEach((tag) => {
                                     stroke-linejoin="round"
                                 ></path>
                             </svg>
-                            fozery@yandex.ru
+                            {{ userStore.user.email }}
                         </div>
                         <div class="info-item">
                             <svg
@@ -100,8 +88,35 @@ tagStore.tags.forEach((tag) => {
                                     stroke-linejoin="round"
                                 ></path>
                             </svg>
-                            +7 (904) 080-64-56
+                            {{ userStore.user.phone }}
                         </div>
+                        <div class="info-item">
+                            <span>Telegram:</span>
+                            <a class="" href="#">{{
+                                userStore.user.telegramUrl
+                            }}</a>
+                        </div>
+                        <div class="info-item">
+                            <span>VK:</span>
+                            <a class="" href="#">{{ userStore.user.vkUrl }}</a>
+                        </div>
+                        <div class="info-item">
+                            <span>GitHub:</span>
+                            <a class="" href="#">{{
+                                userStore.user.githubUrl
+                            }}</a>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <p class="body-text-medium">Специализация</p>
+                    <div class="flex gap-5">
+                        <TagButton
+                            v-for="tag in userStore.user.tags"
+                            :key="tag.id"
+                            class="select-none"
+                            v-bind="tag"
+                        />
                     </div>
 
                     <hr />
@@ -109,55 +124,31 @@ tagStore.tags.forEach((tag) => {
                         Опыт участия в хакатонах
                     </p>
                     <div class="account-about body-text-medium mb-4">
-                        Нет опыта участия в хакатонах
+                        {{ userStore.user.hackExperience }}
                     </div>
 
                     <hr />
                     <p class="body-text-medium mt-4">Образование</p>
                     <div class="account-about body-text-medium mb-4">
-                        Студент 2 курса IT-специальности
+                        {{ userStore.user.education }}
                     </div>
 
                     <hr />
                     <p class="body-text-medium mt-4">О себе</p>
                     <div class="account-about body-text-medium mb-4">
-                        Я студент 2 курса специальности CS. Знаю HTML, CSS,
-                        JavaScript, делал проект на Vue.js и PHP, немного изучал
-                        C/C++, знаком с Docker, Git
+                        {{ userStore.user.about }}
                     </div>
 
                     <!--         Наш код           -->
-
-                    <hr />
-                    <p class="body-text-medium mt-8">Специализация</p>
-                    <div class="flex mt-8 gap-5">
-                        <TagButton
-                            v-for="tag in tagStore.getAddedTags"
-                            :key="tag.id"
-                            class="bg-white"
-                            :can-delete="changingTag"
-                            v-bind="tag"
-                            @delete-tag-from-user="deleteTagFromUser(tag)"
-                        />
-                    </div>
-                    <div v-if="changingTag" class="flex mt-8 gap-5">
-                        <TagButton
-                            v-for="tag in tagStore.getNotAddedTags"
-                            :key="tag.id"
-                            class="bg-white"
-                            v-bind="tag"
-                            @click="addTagToUser(tag)"
-                        />
-                    </div>
-                    <AppButton
-                        class="add-button mt-4"
-                        @click="changingTag = !changingTag"
-                        >Изменить</AppButton
-                    >
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.search_team {
+    padding: 12px 11px;
+    font-size: 18px;
+}
+</style>

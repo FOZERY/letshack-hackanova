@@ -7693,9 +7693,9 @@ button.bg-dark:hover {
     background-color: transparent !important;
 }
 
-.border {
-    border: 1px solid #dee2e6 !important;
-}
+/*.border {*/
+/*    border: 1px solid #dee2e6;*/
+/*}*/
 
 .border-top {
     border-top: 1px solid #dee2e6 !important;
@@ -80702,14 +80702,14 @@ button:focus-visible {
     width: 24px;
     height: 24px;
     padding: 0 !important;
-    background: center/cover no-repeat url('../images/icons/close.svg');
+    background: center/cover no-repeat url('/close.svg');
 }
 .fancybox-button svg {
     display: none;
 }
 @media (hover) {
     .fancybox-button:hover {
-        background-image: url('../images/icons/close-hover.svg');
+        background-image: url('/close-hover.svg');
     }
 }
 @media screen and (max-width: 575px) {
@@ -81665,7 +81665,7 @@ label {
 
 .custom-modal {
     width: 100%;
-    max-width: 520px;
+    max-width: 620px;
     padding: 0;
     border-radius: 12px;
     -webkit-box-shadow:
@@ -83089,7 +83089,7 @@ label {
     margin-bottom: 10px;
 }
 .account__user .account-wrapper .account-content .info-list .info-item a {
-    color: #020202;
+    /*color: #020202;*/
 }
 .account__user
     .account-wrapper

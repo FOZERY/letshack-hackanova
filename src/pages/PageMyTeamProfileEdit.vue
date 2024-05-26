@@ -1,6 +1,7 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import Input from '@/components/Input.vue';
+import AppInput from '@/components/AppInput.vue';
 import Textarea from '@/components/Textarea.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
 
@@ -11,7 +12,7 @@ const { getTeamById } = storeToRefs(teamStore);
 </script>
 
 <template>
-    <div class="content teams" style="padding-top: 64px">
+    <div class="teams">
         <div class="content-header">
             <h3>Настройки команды</h3>
             <a
@@ -95,8 +96,8 @@ const { getTeamById } = storeToRefs(teamStore);
                                     />
                                 </div>
                                 <input
-                                    type="hidden"
                                     id="logo-uploaded"
+                                    type="hidden"
                                     name="logo-uploaded"
                                     value="1"
                                 />
@@ -107,9 +108,9 @@ const { getTeamById } = storeToRefs(teamStore);
                                     >
                                         <label>
                                             <input
+                                                id="logo"
                                                 type="file"
                                                 class="custom-file-input"
-                                                id="logo"
                                                 name="logo"
                                                 accept="image/jpeg"
                                             />

@@ -6,7 +6,7 @@ const teamData = [
         name: 'Dream',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'search',
         participants: [
@@ -42,7 +42,7 @@ const teamData = [
         name: 'Dream2',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'full',
         participants: [
@@ -78,7 +78,7 @@ const teamData = [
         name: 'Dream3',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'full',
         participants: [
@@ -114,7 +114,7 @@ const teamData = [
         name: 'Dream4',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'search',
         participants: [
@@ -150,6 +150,7 @@ const teamData = [
 export const useTeamStore = defineStore('teamStore', {
     state: () => ({
         team: null,
+        teams: [],
     }),
     getters: {
         getTeamById: (state) => {

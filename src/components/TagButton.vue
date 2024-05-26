@@ -13,16 +13,16 @@ const props = defineProps({
 
 <template>
     <div
-        class="py-2 px-4 body-text-medium border shadow-sm rounded-3xl transition duration-300 relative"
+        class="py-3 px-12 body-text-regular border rounded-pill transition duration-300 relative"
     >
         <svg
-            v-if="isAdded && canDelete"
-            class="absolute -top-3 -right-3 m w-6 h-6 translate-y-0.5 hover:scale-110 cursor-pointer"
+            v-if="isAdded"
+            class="absolute -top-2.5 -right-2 m w-7 h-7 translate-y-0.5 hover:scale-110 cursor-pointer"
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
             y="0px"
             viewBox="0 0 50 50"
-            @click.self="
+            @click="
                 $emit('deleteTagFromUser', {
                     id: id,
                     name: name,
@@ -35,7 +35,7 @@ const props = defineProps({
             ></path>
         </svg>
 
-        {{ name }}
+        <span class="text-nowrap text-center">{{ name }}</span>
     </div>
 </template>
 

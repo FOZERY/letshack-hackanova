@@ -3,15 +3,49 @@ import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
+import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
+import AppButton from '@/components/AppButton.vue';
+import TeamPanel from '@/components/TeamPanel.vue';
+import UserModal from '@/components/UserModal.vue';
+import AppModal from '@/components/AppModal.vue';
+import { reactive, ref } from 'vue';
+
+const route = useRoute();
+const router = useRouter();
 
 const teamStore = useTeamStore();
 const { getTeamById } = storeToRefs(teamStore);
 const { id } = useRoute().params;
 teamStore.fetchTeam();
+
+const modalIsOpen = ref(false);
+
+let userData = reactive({});
+
+const closeModal = () => {
+    modalIsOpen.value = false;
+};
+
+const setUserData = (user) => {
+    userData = { ...user };
+};
+
+const showModal = (user) => {
+    setUserData(user);
+    modalIsOpen.value = true;
+};
+
+teamStore.fetchOneTeam(route.params.id);
 </script>
 
 <template>
-    <div class="content teams" style="padding-top: 64px">
+    <AppModal v-if="modalIsOpen" @close-modal="closeModal">
+        <template #modal-header>Профиль участника</template>
+        <template #modal-body>
+            <UserModal v-bind="userData" />
+        </template>
+    </AppModal>
+    <div class="teams">
         <div class="content-header">
             <h3>Команда {{ getTeamById(+id).name }}</h3>
             <a
@@ -62,9 +96,30 @@ teamStore.fetchTeam();
                         :content="getTeamById(+id).description"
                         title="Описание команды"
                     />
+                    <TeamWidgetCard
+                        :content="teamStore.team.requestMessage"
+                        title="В поиске"
+                    />
+                    <div class="team-widget-card">
+                        <div class="actions">
+                            <router-link
+                                :to="{ name: 'teamedit' }"
+                                class="edit-profile button button__block button__filled button__medium"
+                            >
+                                Настройки профиля
+                            </router-link>
+                            >
+                            <AppButton
+                                class="team-out button button__block button__outline__white button__medium"
+                            >
+                                Покинуть команду
+                            </AppButton>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <TeamPanel @show-user-modal="showModal" />
     </div>
 </template>
 
