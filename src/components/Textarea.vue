@@ -7,7 +7,7 @@
                 :name="name"
                 class="form-control"
                 :id="name"
-                placeholder="Описание команды"
+                :placeholder="placeholder"
                 maxlength="256"
                 data-required="1"
                 v-model="model"
@@ -24,5 +24,6 @@ const model = defineModel();
 const props = defineProps({
     title: { type: String },
     name: { type: String, default: 'name' },
+    placeholder: { type: String },
 });
 </script>

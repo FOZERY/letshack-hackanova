@@ -72,11 +72,13 @@ teamStore.fetchTeam();
                                 v-model="teamStore.team.commandDescription"
                                 title="Описание команды*"
                                 name="commandDescription"
+                                placeholder="Описание команды"
                             />
                             <Textarea
                                 v-model="teamStore.team.requestMessege"
                                 title="В поиске"
                                 name="requestMessege"
+                                placeholder="Поиск команды"
                             />
                         </div>
                     </div>

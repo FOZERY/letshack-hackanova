@@ -1,11 +1,11 @@
 <template>
     <div class="teams-item" data-name="{SVET}" data-id="">
         <router-link
-            :to="{ name: 'teamprofile' }"
+            :to="`/personal/teams/profile/${id}`"
             class="team-link team-wrapper"
         >
             <div class="team-title">
-                <div class="name title-text-light">{{ teamName }}</div>
+                <div class="name title-text-light">{{ name }}</div>
                 <div class="users">
                     <div class="users-list">
                         <div class="user">
@@ -24,17 +24,28 @@
                 </div>
             </div>
             <div class="team-task">
-                <div class="title body-text-small">{{ task }}</div>
+                <div class="title body-text-small">Задача</div>
+                <div class="text body-text-medium">{{ task }}</div>
+            </div>
+            <div class="title body-text-small">
+                {{ status === 'search' ? 'В поиске' : 'полная' }}
             </div>
         </router-link>
     </div>
 </template>
 <script setup>
 const props = defineProps({
-    teamName: { type: String },
+    name: { type: String },
     task: { type: String },
     requestMessege: { type: String },
     commandDescription: { type: String },
     status: { type: String },
+    id: { type: String },
 });
 </script>
+
+<style scoped>
+.profile .content .teams-item .team-wrapper {
+    grid-template-columns: 30% 40% 30%;
+}
+</style>
