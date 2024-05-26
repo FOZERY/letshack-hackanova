@@ -1,19 +1,16 @@
 <script setup>
-import Input from '@/components/AppInput.vue';
 import Textarea from '@/components/Textarea.vue';
-import AppButton from '@/components/AppButton.vue';
 import AppInput from '@/components/AppInput.vue';
 import TagButton from '@/components/TagButton.vue';
 
 import { useTagStore } from '@/stores/tagStore.js';
 import { useUserStore } from '@/stores/userStore.js';
 
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive } from 'vue';
+import deepClone from 'lodash.clonedeep';
 
 const userStore = useUserStore();
 const tagStore = useTagStore();
-
-const isChangingTag = ref(false);
 
 const addTagToUser = (tag) => {
     tag.isAdded = true;
@@ -23,16 +20,11 @@ const deleteTagFromUser = (tag) => {
     tag.isAdded = false;
 };
 
-const acceptTagsToUser = () => {
-    isChangingTag.value = false;
-};
-
-const startChanging = () => {
-    isChangingTag.value = true;
-};
-
 userStore.fetchUser();
 tagStore.fetchTags();
+
+const userFormData = reactive(deepClone(userStore.user));
+
 onMounted(() => {
     tagStore.tags = tagStore.tags.map((tag) => ({
         ...tag,
@@ -71,37 +63,39 @@ onMounted(() => {
                         <h5>Контактные данные</h5>
                         <div class="form-block">
                             <AppInput
-                                v-model="userStore.user.surname"
+                                v-model="userFormData.surname"
                                 :title="'Фамилия*'"
                             />
                             <AppInput
-                                v-model="userStore.user.name"
+                                v-model="userFormData.name"
                                 :title="'Имя*'"
                             />
                             <AppInput
-                                v-model="userStore.user.phone"
+                                v-model="userFormData.phone"
                                 :type="'tel'"
                                 :title="'Телефон*'"
                                 :maxlength="18"
                             />
                             <AppInput
-                                v-model="userStore.user.birthday"
+                                v-model="userFormData.birthday"
                                 :title="'Дата рождения*'"
                                 :maxlength="10"
                             />
                             <AppInput
-                                v-model="userStore.user.city"
+                                v-model="userFormData.city"
                                 :title="'Город*'"
                                 :placeholder="'Город'"
                             />
                             <AppInput
-                                v-model="userStore.user.education"
+                                v-model="userFormData.education"
                                 :title="'Ваш уровень'"
-                            /><AppInput
-                                v-model="userStore.user.phone"
+                            />
+                            <AppInput
+                                v-model="userFormData.phone"
                                 :title="'Вы находитесь в поиске работы?'"
-                            /><Textarea
-                                v-model="userStore.user.hackExperience"
+                            />
+                            <Textarea
+                                v-model="userFormData.hackExperience"
                                 :title="`Опыт участия в хакатонах`"
                             />
 
@@ -116,23 +110,42 @@ onMounted(() => {
                             </div>
 
                             <Textarea
-                                v-model="userStore.user.education"
+                                v-model="userFormData.education"
                                 :title="'Образование'"
                             />
                             <Textarea
-                                v-model="userStore.user.jobExperience"
+                                v-model="userFormData.jobExperience"
                                 :title="'Опыт работы'"
                             />
                             <Textarea
-                                v-model="userStore.user.about"
+                                v-model="userFormData.about"
                                 :title="'О себе*'"
                             />
+                            <AppInput
+                                v-model="userFormData.telegramUrl"
+                                v-mask="`t.me/${'X'.repeat(30)}`"
+                                :title="'Telegram'"
+                                :placeholder="'t.me/'"
+                            />
+                            <AppInput
+                                v-model="userFormData.vkUrl"
+                                v-mask="`vk.com/${'X'.repeat(30)}`"
+                                :title="'VK'"
+                                :placeholder="'vk.com/'"
+                            />
+                            <AppInput
+                                v-model="userFormData.githubUrl"
+                                v-mask="`github.com/${'X'.repeat(30)}`"
+                                :placeholder="'github.com/'"
+                                :title="'GitHub'"
+                            />
+
                             <div class="form-group">
-                                <p class="body-text-large mb-8">
-                                    Специализация
-                                </p>
+                                <p class="body-text-large">Специализация</p>
                                 <div>
-                                    <div class="mt-8">
+                                    <div
+                                        v-if="tagStore.getAddedTags.length > 0"
+                                    >
                                         <div class="body-text-medium mb-4">
                                             Мои специализации
                                         </div>
@@ -141,7 +154,6 @@ onMounted(() => {
                                                 v-for="tag in tagStore.getAddedTags"
                                                 :key="tag.id"
                                                 class="bg-slate-200 select-none"
-                                                :can-delete="isChangingTag"
                                                 v-bind="tag"
                                                 @delete-tag-from-user="
                                                     deleteTagFromUser(tag)
@@ -171,16 +183,16 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <div
-                                class="search_team flex justify-between items-center w-full border rounded-xl"
-                            >
-                                <span>Ищу команду</span>
-                                <form
-                                    action=""
-                                    class="flex justify-center items-center"
-                                >
-                                    <input type="checkbox" class="w-7 h-7" />
-                                </form>
+                            <div class="form-group">
+                                <p class="body-text-large">Ищу команду</p>
+                                <div class="flex h-full">
+                                    <input
+                                        id="radio-two"
+                                        v-model="userFormData.requestCommand"
+                                        type="checkbox"
+                                        class="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-700 checked:bg-rose-500 cursor-pointer"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

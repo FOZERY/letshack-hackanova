@@ -2,6 +2,7 @@
 import TagButton from '@/components/TagButton.vue';
 
 import { useUserStore } from '@/stores/userStore.js';
+import SearchStatus from '@/components/SearchStatus.vue';
 
 const userStore = useUserStore();
 
@@ -29,25 +30,20 @@ userStore.fetchUser();
                     </div>
                 </div>
                 <div class="account-content">
-                    <h5>
-                        {{ `${userStore.user.name} ${userStore.user.surname}` }}
-                    </h5>
-
+                    <div class="flex items-center gap-10">
+                        <h5>
+                            {{
+                                `${userStore.user.name} ${userStore.user.surname}`
+                            }}
+                        </h5>
+                        <SearchStatus v-if="userStore.user.requestCommand"
+                            >Ищу команду</SearchStatus
+                        >
+                    </div>
                     <div class="account-about body-text-medium mb-4">
                         {{ userStore.user.city }}
                     </div>
 
-                    <div
-                        class="search_team flex justify-between items-center w-full border rounded-xl"
-                    >
-                        <span>Ищу команду</span>
-                        <form
-                            action=""
-                            class="flex justify-center items-center"
-                        >
-                            <input type="checkbox" class="w-7 h-7" />
-                        </form>
-                    </div>
                     <hr />
 
                     <div class="info-list body-text-medium">
@@ -95,8 +91,19 @@ userStore.fetchUser();
                             {{ userStore.user.phone }}
                         </div>
                         <div class="info-item">
-                            <a class="color" href="#">{{
+                            <span>Telegram:</span>
+                            <a class="" href="#">{{
                                 userStore.user.telegramUrl
+                            }}</a>
+                        </div>
+                        <div class="info-item">
+                            <span>VK:</span>
+                            <a class="" href="#">{{ userStore.user.vkUrl }}</a>
+                        </div>
+                        <div class="info-item">
+                            <span>GitHub:</span>
+                            <a class="" href="#">{{
+                                userStore.user.githubUrl
                             }}</a>
                         </div>
                     </div>

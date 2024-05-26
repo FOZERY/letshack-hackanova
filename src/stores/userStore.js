@@ -9,6 +9,8 @@ const userData = {
     email: 'email@test.ru',
     phone: '+7 (904) 080 64-56',
     telegramUrl: 't.me/FOZERY',
+    vkUrl: 'vk.com/bogatstvodeda',
+    githubUrl: 'github.com/FOZERY',
     searchingJob: true,
     hackExperience: 'Нет опыта участия в хакатонах',
     jobExperience: '',
