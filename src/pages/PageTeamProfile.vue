@@ -33,7 +33,7 @@ const showModal = (user) => {
     modalIsOpen.value = true;
 };
 
-teamStore.fetchTeamById(route.params.id);
+teamStore.fetchTeamById(id);
 </script>
 
 <template>

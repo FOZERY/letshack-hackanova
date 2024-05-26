@@ -1,16 +1,19 @@
 <script setup>
 import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+
 import UserProfileCard from '@/components/UserProfileCard.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
 
 const teamStore = useTeamStore();
 const activeTab = ref(1);
 
-defineEmits(['showUserModal']);
+const { getTeamById } = storeToRefs(teamStore);
 
+defineEmits(['showUserModal']);
 teamStore.fetchTeam();
-const { id } = useRoute().params;
+const id = Number(useRoute().params.id);
 </script>
 
 <template>
@@ -81,9 +84,9 @@ const { id } = useRoute().params;
                         >Добавить участника</a
                     >
                 </div>
-                <div class="team-list">
+                <div v-if="getTeamById(id)?.participants" class="team-list">
                     <UserProfileCard
-                        v-for="user in teamStore.team.participants"
+                        v-for="user in getTeamById(+id).participants"
                         v-bind="user"
                         @click="$emit('showUserModal', user)"
                     />
