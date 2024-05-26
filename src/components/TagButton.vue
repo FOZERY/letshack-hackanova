@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue';
-
 defineEmits(['deleteTagFromUser']);
 
 const props = defineProps({
@@ -13,7 +11,7 @@ const props = defineProps({
 
 <template>
     <div
-        class="py-3 px-12 body-text-regular border rounded-pill transition duration-300 relative"
+        class="py-3 px-12 body-text-regular border rounded-pill transition duration-300 relative select-none"
     >
         <svg
             v-if="isAdded"

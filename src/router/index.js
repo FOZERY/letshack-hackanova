@@ -5,6 +5,7 @@ import PageTeams from '@/pages/PageTeams.vue';
 import PageUserProfile from '@/pages/PageUserProfile.vue';
 import PageMain from '@/pages/PageMain.vue';
 import PageMyTeamProfileEdit from '@/pages/PageMyTeamProfileEdit.vue';
+import PageParticipants from '@/pages/PageParticipants.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,7 +30,16 @@ const router = createRouter({
                 },
             ],
         },
-
+        {
+            path: '/personal/participants',
+            children: [
+                {
+                    path: '',
+                    name: 'participants',
+                    component: PageParticipants,
+                },
+            ],
+        },
         {
             path: '/personal/teams',
             children: [

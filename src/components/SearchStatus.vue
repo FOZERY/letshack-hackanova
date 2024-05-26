@@ -2,7 +2,7 @@
 
 <template>
     <div
-        class="search_status border rounded-2xl body-text-medium py-2 px-3 select-none"
+        class="search_status flex justify-center items-center text-nowrap text-center max-w-56 border rounded-2xl body-text-medium py-2 px-3 select-none"
     >
         <slot />
     </div>
