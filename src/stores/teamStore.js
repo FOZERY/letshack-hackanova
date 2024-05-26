@@ -159,6 +159,10 @@ export const useTeamStore = defineStore('teamStore', {
     actions: {
         async fetchTeam() {
             if (this.team !== null) return;
+            const data = await fetch('/api/team/get-all-teams').then((res) =>
+                res.json()
+            );
+            console.log(data);
             this.team = teamData;
         },
     },
