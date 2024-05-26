@@ -31,7 +31,7 @@
                 >
 
                 <router-link
-                    :to="{ name: 'teamedit' }"
+                    :to="{ name: 'teamprofile' }"
                     class="edit-profile button button__block button__filled button__medium"
                 >
                     Настройки профиля</router-link

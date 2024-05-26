@@ -30,5 +30,4 @@ const props = defineProps({
     first_name: { type: String, default: null },
     last_name: { type: String, default: null },
 });
-console.log(props);
 </script>

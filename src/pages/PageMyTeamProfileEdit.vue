@@ -8,6 +8,7 @@ const teamStore = useTeamStore();
 
 teamStore.fetchTeam();
 const { getTeamById } = storeToRefs(teamStore);
+const team = teamStore.fetchTeamById(2);
 </script>
 
 <template>
@@ -136,7 +137,7 @@ const { getTeamById } = storeToRefs(teamStore);
                 </div>
                 <div class="form-footer">
                     <router-link
-                        :to="{ name: 'teams' }"
+                        :to="{ name: 'teamprofile' }"
                         class="submit-button save-team button button__block button__filled button__large"
                     >
                         Сохранить изменения</router-link
