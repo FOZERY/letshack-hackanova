@@ -1,10 +1,14 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
 
 defineEmits(['closeModal']);
 
 onMounted(() => {
     document.getElementsByTagName('html')[0].style.overflow = 'hidden';
+});
+
+onUnmounted(() => {
+    document.getElementsByTagName('html')[0].style.overflow = 'auto';
 });
 </script>
 
