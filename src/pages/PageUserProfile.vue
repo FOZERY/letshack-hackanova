@@ -3,30 +3,13 @@ import TagButton from '@/components/TagButton.vue';
 
 import { useUserStore } from '@/stores/userStore.js';
 import SearchStatus from '@/components/SearchStatus.vue';
-import AppModal from '@/components/AppModal.vue';
-import { ref } from 'vue';
-import UserModal from '@/components/UserModal.vue';
 
 const userStore = useUserStore();
-
-const popupIsOpen = ref(false);
-
-const closeModal = () => {
-    popupIsOpen.value = false;
-    document.getElementsByTagName('html')[0].style.overflow = 'auto';
-};
 
 userStore.fetchUser();
 </script>
 
 <template>
-    <button @click="popupIsOpen = !popupIsOpen">Open</button>
-    <AppModal v-if="popupIsOpen" @close-modal="closeModal">
-        <template #modal-header>Профиль участника</template>
-        <template #modal-body>
-            <UserModal />
-        </template>
-    </AppModal>
     <div class="account__user">
         <div class="content-header">
             <h3>Мой профиль</h3>

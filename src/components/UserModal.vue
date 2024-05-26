@@ -2,6 +2,9 @@
 import SearchStatus from '@/components/SearchStatus.vue';
 
 defineProps({
+    id: { type: Number, default: null },
+    inviteTime: { type: Number, default: null },
+    name: { type: String, default: '' },
     modalTitle: { type: String, default: '' },
     inSearch: { type: Boolean, default: true },
 });

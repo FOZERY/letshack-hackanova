@@ -1,19 +1,48 @@
 <script setup>
-import { useRoute } from 'vue-router';
-import Input from '@/components/Input.vue';
-import Textarea from '@/components/Textarea.vue';
+import { useRoute, useRouter } from 'vue-router';
 import { useTeamStore } from '@/stores/teamStore.js';
+import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
+import AppButton from '@/components/AppButton.vue';
+import TeamPanel from '@/components/TeamPanel.vue';
+import UserModal from '@/components/UserModal.vue';
+import AppModal from '@/components/AppModal.vue';
+import { reactive, ref } from 'vue';
+
+const route = useRoute();
+const router = useRouter();
 
 const teamStore = useTeamStore();
-console.log(useRoute().params);
 
-teamStore.fetchTeam();
+const modalIsOpen = ref(false);
+
+let userData = reactive({});
+
+const closeModal = () => {
+    modalIsOpen.value = false;
+};
+
+const setUserData = (user) => {
+    userData = { ...user };
+};
+
+const showModal = (user) => {
+    setUserData(user);
+    modalIsOpen.value = true;
+};
+
+teamStore.fetchOneTeam(route.params.id);
 </script>
 
 <template>
+    <AppModal v-if="modalIsOpen" @close-modal="closeModal">
+        <template #modal-header>Профиль участника</template>
+        <template #modal-body>
+            <UserModal v-bind="userData" />
+        </template>
+    </AppModal>
     <div class="teams">
         <div class="content-header">
-            <h3>Команда {{ findTeamById(3).name }}</h3>
+            <h3>Команда {{ teamStore.team.name }}</h3>
             <a
                 href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/teams"
                 class="go-back-link button button__block button__light button__medium"
@@ -33,7 +62,7 @@ teamStore.fetchTeam();
                             />
                         </div>
                         <div class="team-title title-text-small">
-                            {{ team.name }}
+                            {{ teamStore.team.name }}
                         </div>
                         <div class="team-date body-text-medium">
                             Дата создания команды: 23.05.2024 18:05
@@ -63,7 +92,7 @@ teamStore.fetchTeam();
                         title="Описание команды"
                     />
                     <TeamWidgetCard
-                        :content="teamStore.team.requestMessege"
+                        :content="teamStore.team.requestMessage"
                         title="В поиске"
                     />
                     <div class="team-widget-card">
@@ -72,20 +101,20 @@ teamStore.fetchTeam();
                                 :to="{ name: 'teamedit' }"
                                 class="edit-profile button button__block button__filled button__medium"
                             >
-                                Настройки профиля</router-link
-                            >
+                                Настройки профиля
+                            </router-link>
                             >
                             <AppButton
                                 class="team-out button button__block button__outline__white button__medium"
                             >
-                                Покинуть команду</AppButton
-                            >
+                                Покинуть команду
+                            </AppButton>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <TeamPanel />
+        <TeamPanel @show-user-modal="showModal" />
     </div>
 </template>
 
