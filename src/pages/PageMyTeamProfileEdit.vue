@@ -9,7 +9,7 @@ teamStore.fetchTeam();
 </script>
 
 <template>
-    <div class="content teams" style="padding-top: 64px">
+    <div class="teams">
         <div class="content-header">
             <h3>Настройки команды</h3>
             <a

@@ -6,6 +6,8 @@ import { useTeamStore } from '@/stores/teamStore.js';
 const teamStore = useTeamStore();
 const activeTab = ref(1);
 
+defineEmits(['showUserModal']);
+
 teamStore.fetchTeam();
 </script>
 
@@ -15,7 +17,7 @@ teamStore.fetchTeam();
             <li class="nav-item">
                 <a
                     class="nav-link"
-                    :class="{ active: activeTab == 1 }"
+                    :class="{ active: activeTab === 1 }"
                     href="#"
                     data-toggle="tab"
                     @click="activeTab = 1"
@@ -25,7 +27,7 @@ teamStore.fetchTeam();
             <li class="nav-item">
                 <a
                     class="nav-link"
-                    :class="{ active: activeTab == 2 }"
+                    :class="{ active: activeTab === 2 }"
                     href="#"
                     data-toggle="tab"
                     @click="activeTab = 2"
@@ -35,7 +37,7 @@ teamStore.fetchTeam();
             <li class="nav-item">
                 <a
                     class="nav-link"
-                    :class="{ active: activeTab == 3 }"
+                    :class="{ active: activeTab === 3 }"
                     href="#"
                     data-toggle="tab"
                     @click="activeTab = 3"
@@ -46,9 +48,9 @@ teamStore.fetchTeam();
 
         <div class="tab-content team-content">
             <div
-                class="tab-pane"
-                :class="{ active: activeTab == 1 }"
                 id="tab_1"
+                class="tab-pane"
+                :class="{ active: activeTab === 1 }"
             >
                 <div class="team-content-header">
                     <h6>Участники</h6>
@@ -81,13 +83,14 @@ teamStore.fetchTeam();
                     <UserProfileCard
                         v-for="user in teamStore.team.participants"
                         v-bind="user"
+                        @click="$emit('showUserModal', user)"
                     />
                 </div>
             </div>
             <div
-                class="tab-pane"
-                :class="{ active: activeTab == 2 }"
                 id="tab_2"
+                class="tab-pane"
+                :class="{ active: activeTab === 2 }"
             >
                 <div class="team-content-header">
                     <h6>Заявки</h6>

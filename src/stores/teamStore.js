@@ -6,7 +6,7 @@ const teamData = [
         name: 'Dream',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'search',
         participants: [
@@ -42,7 +42,7 @@ const teamData = [
         name: 'Dream2',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'full',
         participants: [
@@ -78,7 +78,7 @@ const teamData = [
         name: 'Dream3',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'full',
         participants: [
@@ -114,7 +114,7 @@ const teamData = [
         name: 'Dream4',
         commandDescription: 'Супер команда',
         task: 'Работать!',
-        requestMessege: 'Нужны ВСЕ!!!!',
+        requestMessage: 'Нужны ВСЕ!!!!',
         link: 'http://gg',
         status: 'search',
         participants: [
@@ -150,6 +150,7 @@ const teamData = [
 export const useTeamStore = defineStore('teamStore', {
     state: () => ({
         team: null,
+        teams: [],
     }),
     getters: {
         findTeamById: (state) => {
@@ -158,12 +159,14 @@ export const useTeamStore = defineStore('teamStore', {
     },
     actions: {
         async fetchTeam() {
-            if (this.team !== null) return;
-            const data = await fetch('/api/team/get-all-teams').then((res) =>
-                res.json()
-            );
-            console.log(data);
-            this.team = teamData;
+            // if (this.team !== null) return;
+            // const data = await fetch('/api/team/get-all-teams').then((res) =>
+            //     res.json()
+            // );
+            this.teams = teamData;
+        },
+        async fetchOneTeam(id) {
+            this.team = teamData.find((team) => team.id === +id);
         },
     },
 });

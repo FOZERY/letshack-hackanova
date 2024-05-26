@@ -37,10 +37,10 @@
 const props = defineProps({
     name: { type: String },
     task: { type: String },
-    requestMessege: { type: String },
+    requestMessage: { type: String },
     commandDescription: { type: String },
     status: { type: String },
-    id: { type: String },
+    id: { type: Number },
 });
 </script>
 

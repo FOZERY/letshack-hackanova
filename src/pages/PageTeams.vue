@@ -1,5 +1,5 @@
 <template>
-    <div class="content teams" style="padding-top: 64px">
+    <div class="teams">
         <div class="content-header">
             <h3>Команды</h3>
 
@@ -55,11 +55,14 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tab_1">
+                    <div id="tab_1" class="tab-pane active">
                         <h5>Все команды</h5>
 
                         <div class="filter">
-                            <Input title="Поиск команды" name="search-team" />
+                            <AppInput
+                                title="Поиск команды"
+                                name="search-team"
+                            />
                             <div class="form-group">
                                 <label
                                     for="tasks-filter-selectized"
@@ -67,9 +70,9 @@
                                     >Фильтр по задачам</label
                                 >
                                 <select
+                                    id="tasks-filter"
                                     name="tasks-filter"
                                     class="form-control list-control selectized"
-                                    id="tasks-filter"
                                     placeholder="Задача"
                                     tabindex="-1"
                                     style="display: none"
@@ -86,11 +89,11 @@
                                             Все задачи
                                         </div>
                                         <input
+                                            id="tasks-filter-selectized"
                                             type="text"
                                             autocomplete="new-password"
                                             autofill="no"
                                             tabindex=""
-                                            id="tasks-filter-selectized"
                                             style="width: 4px"
                                         />
                                     </div>
@@ -102,12 +105,12 @@
 
                         <div class="teams-list">
                             <TeamsItem
-                                v-for="team in teamStore.team"
+                                v-for="team in teamStore.teams"
                                 v-bind="team"
                             />
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab_2">
+                    <div id="tab_2" class="tab-pane">
                         <h5>Приглашения</h5>
                         <div class="invitations-list">
                             <p class="body-text-large mt-5">
@@ -123,9 +126,10 @@
 
 <script setup>
 import TeamsItem from '@/components/TeamsItem.vue';
-import Input from '@/components/Input.vue';
+import AppInput from '@/components/AppInput.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
 
 const teamStore = useTeamStore();
+
 teamStore.fetchTeam();
 </script>
