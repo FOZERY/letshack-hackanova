@@ -56,16 +56,13 @@ const team = findTeamById.value(2);
                     </div>
                 </div>
                 <div class="column">
+                    <TeamWidgetCard :content="team.task" title="Задача" />
                     <TeamWidgetCard
-                        :content="teamStore.team.task"
-                        title="Задача"
-                    />
-                    <TeamWidgetCard
-                        :content="teamStore.team.commandDescription"
+                        :content="team.commandDescription"
                         title="Описание команды"
                     />
                     <TeamWidgetCard
-                        :content="teamStore.team.requestMessege"
+                        :content="team.requestMessege"
                         title="В поиске"
                     />
                     <div class="team-widget-card">

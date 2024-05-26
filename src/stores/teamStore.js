@@ -149,32 +149,35 @@ const teamData = [
 
 export const useTeamStore = defineStore('teamStore', {
     state: () => ({
-        team: null,
-        teams: [],
+        teams: null,
     }),
     getters: {
         getTeamById: (state) => {
-            if (!state.team) return () => 'gg';
-            return (teamId) => state.team.find((team) => team.id === teamId);
-        },
-        getUserById: (state) => {
-            return (userId) => state.users.find((user) => user.id === userId);
+            if (!state.teams) return () => 'gg';
+            return (teamId) => state.teams.find((team) => team.id === teamId);
         },
     },
     actions: {
         async fetchTeam() {
-            if (this.team !== null) return;
+            if (this.teams) return;
             const data = await fetch('/api/team/get-all-teams').then((res) =>
                 res.json()
             );
-            this.team = data;
+            this.teams = data;
         },
         async fetchTeamById(teamId) {
-            if (this.team !== null) return;
+            if (this.teams) return;
             const data = await fetch(`/api/team/${teamId}/getTeam`).then(
                 (res) => res.json()
             );
-            this.team = [data];
+            const teamIndex = state.teams.findIndex(
+                (team) => team.id === data.id
+            );
+            if (~team) {
+                this.teams[teamIndex] = this.teams = data;
+            } else {
+                this.teams = [data];
+            }
         },
     },
 });

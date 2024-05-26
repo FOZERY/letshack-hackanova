@@ -1,4 +1,5 @@
 <script setup>
+import { useRoute } from 'vue-router';
 import { ref } from 'vue';
 import UserProfileCard from '@/components/UserProfileCard.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
@@ -9,6 +10,7 @@ const activeTab = ref(1);
 defineEmits(['showUserModal']);
 
 teamStore.fetchTeam();
+const { id } = useRoute().params;
 </script>
 
 <template>

@@ -3,7 +3,6 @@ import { useRoute } from 'vue-router';
 import { storeToRefs } from 'pinia';
 import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
-import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
 import AppButton from '@/components/AppButton.vue';
 import TeamPanel from '@/components/TeamPanel.vue';
 import UserModal from '@/components/UserModal.vue';
@@ -11,7 +10,6 @@ import AppModal from '@/components/AppModal.vue';
 import { reactive, ref } from 'vue';
 
 const route = useRoute();
-const router = useRouter();
 
 const teamStore = useTeamStore();
 const { getTeamById } = storeToRefs(teamStore);
@@ -35,7 +33,7 @@ const showModal = (user) => {
     modalIsOpen.value = true;
 };
 
-teamStore.fetchOneTeam(route.params.id);
+teamStore.fetchTeamById(route.params.id);
 </script>
 
 <template>
@@ -96,10 +94,7 @@ teamStore.fetchOneTeam(route.params.id);
                         :content="getTeamById(+id).description"
                         title="Описание команды"
                     />
-                    <TeamWidgetCard
-                        :content="teamStore.team.requestMessage"
-                        title="В поиске"
-                    />
+
                     <div class="team-widget-card">
                         <div class="actions">
                             <router-link

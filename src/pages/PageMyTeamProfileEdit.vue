@@ -1,6 +1,5 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import Input from '@/components/Input.vue';
 import AppInput from '@/components/AppInput.vue';
 import Textarea from '@/components/Textarea.vue';
 import { useTeamStore } from '@/stores/teamStore.js';
@@ -52,7 +51,7 @@ const { getTeamById } = storeToRefs(teamStore);
                 autocomplete="off"
                 enctype="multipart/form-data"
             >
-                <input
+                <AppInput
                     type="hidden"
                     name="_token"
                     value="ZeELS8WvfzpQZOPQXDbesYokCDvHgpRJ0VIxWEk1"
@@ -61,12 +60,12 @@ const { getTeamById } = storeToRefs(teamStore);
                     <div class="column">
                         <h5>Основная информация</h5>
                         <div class="form-block">
-                            <Input
+                            <AppInput
                                 v-model="getTeamById(2).name"
                                 title="Название команды"
                                 name="teamName"
                             />
-                            <Input
+                            <AppInput
                                 v-model="getTeamById(2).link"
                                 title="Ссылка на чат команды"
                                 name="link"
