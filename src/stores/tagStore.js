@@ -30,6 +30,9 @@ const tagsData = [
         name: 'Cyber Security',
     },
 ];
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 const compareTagsFn = (tag1, tag2) => tag1.id > tag2.id;
 
@@ -51,7 +54,9 @@ export const useTagStore = defineStore('tagStore', {
     },
     actions: {
         async fetchTags() {
-            this.tags = tagsData;
+            const response = await fetch('/api/tag/get-tag-list');
+            const data = await response.json();
+            this.tags = data;
         },
     },
 });

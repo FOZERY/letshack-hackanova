@@ -21,16 +21,23 @@ const deleteTagFromUser = (tag) => {
     tag.isAdded = false;
 };
 
+const userIdTest = 6;
 const updateUserData = async () => {
     try {
+        const tags = tagStore.getAddedTags.map((tag) => tag.name);
+        console.log(tags);
+        await userStore.updateUserTags(userIdTest, tags);
         await router.push({ name: 'profile' });
     } catch (e) {
         console.log(e);
     }
 };
 
-userStore.fetchUser();
-tagStore.fetchTags();
+await userStore.fetchUser(userIdTest);
+await tagStore.fetchTags();
+
+console.log(userStore.user);
+console.log(tagStore.tags);
 
 const userFormData = reactive(deepClone(userStore.user));
 
@@ -72,11 +79,11 @@ onMounted(() => {
                         <h5>Контактные данные</h5>
                         <div class="form-block">
                             <AppInput
-                                v-model="userFormData.surname"
+                                v-model="userFormData.second_name"
                                 :title="'Фамилия*'"
                             />
                             <AppInput
-                                v-model="userFormData.name"
+                                v-model="userFormData.first_name"
                                 :title="'Имя*'"
                             />
                             <AppInput
@@ -100,11 +107,11 @@ onMounted(() => {
                                 :title="'Ваш уровень'"
                             />
                             <AppInput
-                                v-model="userFormData.phone"
+                                v-model="userFormData.job_search"
                                 :title="'Вы находитесь в поиске работы?'"
                             />
                             <Textarea
-                                v-model="userFormData.hackExperience"
+                                v-model="userFormData.experience"
                                 :title="`Опыт участия в хакатонах`"
                             />
 
@@ -123,27 +130,27 @@ onMounted(() => {
                                 :title="'Образование'"
                             />
                             <Textarea
-                                v-model="userFormData.jobExperience"
+                                v-model="userFormData.experience"
                                 :title="'Опыт работы'"
                             />
                             <Textarea
-                                v-model="userFormData.about"
+                                v-model="userFormData.about_me"
                                 :title="'О себе*'"
                             />
                             <AppInput
-                                v-model="userFormData.telegramUrl"
+                                v-model="userFormData.telegram"
                                 v-mask="`t.me/${'X'.repeat(30)}`"
                                 :title="'Telegram'"
                                 :placeholder="'t.me/'"
                             />
                             <AppInput
-                                v-model="userFormData.vkUrl"
+                                v-model="userFormData.vk"
                                 v-mask="`vk.com/${'X'.repeat(30)}`"
                                 :title="'VK'"
                                 :placeholder="'vk.com/'"
                             />
                             <AppInput
-                                v-model="userFormData.githubUrl"
+                                v-model="userFormData.github"
                                 v-mask="`github.com/${'X'.repeat(30)}`"
                                 :placeholder="'github.com/'"
                                 :title="'GitHub'"
@@ -197,7 +204,7 @@ onMounted(() => {
                                 <div class="flex h-full">
                                     <input
                                         id="radio-two"
-                                        v-model="userFormData.requestCommand"
+                                        v-model="userFormData.job_search"
                                         type="checkbox"
                                         class="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-700 checked:bg-rose-500 cursor-pointer"
                                     />
@@ -210,10 +217,7 @@ onMounted(() => {
                         <div class="form-block">
                             <div class="account-photo">
                                 <div class="preview">
-                                    <img
-                                        src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/3980546947_1716481621.jpg"
-                                        alt="Дмитрий Тагиев"
-                                    />
+                                    <img src="" alt="Дмитрий Тагиев" />
                                 </div>
 
                                 <div class="action">

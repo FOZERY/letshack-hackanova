@@ -5,8 +5,8 @@ import { useUserStore } from '@/stores/userStore.js';
 import SearchStatus from '@/components/SearchStatus.vue';
 
 const userStore = useUserStore();
-
-userStore.fetchUser();
+const userIdTest = 6;
+await userStore.fetchUser(userIdTest);
 </script>
 
 <template>
@@ -24,8 +24,8 @@ userStore.fetchUser();
                 <div>
                     <div class="account-icon">
                         <img
-                            src="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/storage/images/avatars/3980546947_1716481621.jpg"
-                            :alt="`${userStore.user.name} ${userStore.user.surname}`"
+                            src=""
+                            :alt="`${userStore.user.first_name} ${userStore.user.last_name}`"
                         />
                     </div>
                 </div>
@@ -33,15 +33,16 @@ userStore.fetchUser();
                     <div class="flex items-center gap-10">
                         <h5>
                             {{
-                                `${userStore.user.name} ${userStore.user.surname}`
+                                `${userStore.user.first_name} ${userStore.user.last_name} `
                             }}
                         </h5>
-                        <SearchStatus v-if="userStore.user.requestCommand"
+                        <SearchStatus
+                            v-if="userStore.user.status_team === 'not-in-team'"
                             >Ищу команду</SearchStatus
                         >
                     </div>
                     <div class="account-about body-text-medium mb-4">
-                        {{ userStore.user.city }}
+                        Город!
                     </div>
 
                     <hr />
@@ -93,18 +94,16 @@ userStore.fetchUser();
                         <div class="info-item">
                             <span>Telegram:</span>
                             <a class="" href="#">{{
-                                userStore.user.telegramUrl
+                                userStore.user.telegram
                             }}</a>
                         </div>
                         <div class="info-item">
                             <span>VK:</span>
-                            <a class="" href="#">{{ userStore.user.vkUrl }}</a>
+                            <a class="" href="#">{{ userStore.user.vk }}</a>
                         </div>
                         <div class="info-item">
                             <span>GitHub:</span>
-                            <a class="" href="#">{{
-                                userStore.user.githubUrl
-                            }}</a>
+                            <a class="" href="#">{{ userStore.user.github }}</a>
                         </div>
                     </div>
 
@@ -124,7 +123,7 @@ userStore.fetchUser();
                         Опыт участия в хакатонах
                     </p>
                     <div class="account-about body-text-medium mb-4">
-                        {{ userStore.user.hackExperience }}
+                        {{ userStore.user.experience }}
                     </div>
 
                     <hr />
@@ -136,7 +135,7 @@ userStore.fetchUser();
                     <hr />
                     <p class="body-text-medium mt-4">О себе</p>
                     <div class="account-about body-text-medium mb-4">
-                        {{ userStore.user.about }}
+                        {{ userStore.user.about_me }}
                     </div>
 
                     <!--         Наш код           -->

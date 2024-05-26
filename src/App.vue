@@ -6,7 +6,9 @@ import TheAside from '@/components/TheAside.vue';
     <div class="profile">
         <TheAside />
         <div class="content">
-            <router-view />
+            <Suspense>
+                <router-view />
+            </Suspense>
         </div>
     </div>
 </template>
