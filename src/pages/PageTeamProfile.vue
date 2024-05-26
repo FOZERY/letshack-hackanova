@@ -1,7 +1,8 @@
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
-import { useTeamStore } from '@/stores/teamStore.js';
+import { useRoute } from 'vue-router';
+import { storeToRefs } from 'pinia';
 import TeamWidgetCard from '@/components/TeamWidgetCard.vue';
+import { useTeamStore } from '@/stores/teamStore.js';
 import AppButton from '@/components/AppButton.vue';
 import TeamPanel from '@/components/TeamPanel.vue';
 import UserModal from '@/components/UserModal.vue';
@@ -9,9 +10,11 @@ import AppModal from '@/components/AppModal.vue';
 import { reactive, ref } from 'vue';
 
 const route = useRoute();
-const router = useRouter();
 
 const teamStore = useTeamStore();
+const { getTeamById } = storeToRefs(teamStore);
+const { id } = useRoute().params;
+teamStore.fetchTeam();
 
 const modalIsOpen = ref(false);
 
@@ -30,7 +33,7 @@ const showModal = (user) => {
     modalIsOpen.value = true;
 };
 
-teamStore.fetchOneTeam(route.params.id);
+teamStore.fetchTeamById(id);
 </script>
 
 <template>
@@ -42,7 +45,7 @@ teamStore.fetchOneTeam(route.params.id);
     </AppModal>
     <div class="teams">
         <div class="content-header">
-            <h3>Команда {{ teamStore.team.name }}</h3>
+            <h3>Команда {{ getTeamById(+id).name }}</h3>
             <a
                 href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/teams"
                 class="go-back-link button button__block button__light button__medium"
@@ -62,7 +65,7 @@ teamStore.fetchOneTeam(route.params.id);
                             />
                         </div>
                         <div class="team-title title-text-small">
-                            {{ teamStore.team.name }}
+                            {{ getTeamById(+id).name }}
                         </div>
                         <div class="team-date body-text-medium">
                             Дата создания команды: 23.05.2024 18:05
@@ -84,17 +87,14 @@ teamStore.fetchOneTeam(route.params.id);
                 </div>
                 <div class="column">
                     <TeamWidgetCard
-                        :content="teamStore.team.task"
+                        :content="getTeamById(+id).task"
                         title="Задача"
                     />
                     <TeamWidgetCard
-                        :content="teamStore.team.commandDescription"
+                        :content="getTeamById(+id).description"
                         title="Описание команды"
                     />
-                    <TeamWidgetCard
-                        :content="teamStore.team.requestMessage"
-                        title="В поиске"
-                    />
+
                     <div class="team-widget-card">
                         <div class="actions">
                             <router-link

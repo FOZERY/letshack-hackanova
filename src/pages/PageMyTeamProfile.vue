@@ -7,15 +7,14 @@ import { useTeamStore } from '@/stores/teamStore.js';
 
 const teamStore = useTeamStore();
 
-teamStore.fetchTeam();
-const { findTeamById } = storeToRefs(teamStore);
-const team = findTeamById.value(2);
+teamStore.fetchTeamById(2);
+const { getTeamById } = storeToRefs(teamStore);
 </script>
 
 <template>
     <div class="content teams" style="padding-top: 64px">
         <div class="content-header">
-            <h3>Команда {{ findTeamById(3).name }}</h3>
+            <h3>Команда {{ getTeamById(2).name }}</h3>
             <a
                 href="https://xn--80ajqb5afw.xn--80aa3anexr8c.xn--p1acf/personal/teams"
                 class="go-back-link button button__block button__light button__medium"
@@ -35,7 +34,7 @@ const team = findTeamById.value(2);
                             />
                         </div>
                         <div class="team-title title-text-small">
-                            {{ team.name }}
+                            {{ getTeamById(2).name }}
                         </div>
                         <div class="team-date body-text-medium">
                             Дата создания команды: 23.05.2024 18:05
@@ -57,15 +56,15 @@ const team = findTeamById.value(2);
                 </div>
                 <div class="column">
                     <TeamWidgetCard
-                        :content="teamStore.team.task"
+                        :content="getTeamById(2).task"
                         title="Задача"
                     />
                     <TeamWidgetCard
-                        :content="teamStore.team.commandDescription"
+                        :content="getTeamById(2).description"
                         title="Описание команды"
                     />
                     <TeamWidgetCard
-                        :content="teamStore.team.requestMessege"
+                        :content="getTeamById(2).description"
                         title="В поиске"
                     />
                     <div class="team-widget-card">

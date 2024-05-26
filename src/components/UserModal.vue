@@ -4,7 +4,8 @@ import SearchStatus from '@/components/SearchStatus.vue';
 defineProps({
     id: { type: Number, default: null },
     inviteTime: { type: Number, default: null },
-    name: { type: String, default: '' },
+    first_name: { type: String, default: null },
+    last_name: { type: String, default: null },
     modalTitle: { type: String, default: '' },
     inSearch: { type: Boolean, default: true },
 });
@@ -13,16 +14,14 @@ defineProps({
 <template>
     <div class="user-profile-block">
         <div id="card-user-avatar" class="user-icon">
-            <img
-                src="https://летсхак.хакатоны.рус/storage/images/avatars/3980546947_1716481621.jpg"
-            />
+            <img src="@/assets/user-default.png" />
         </div>
         <div class="user-info">
             <div
                 id="card-user-name"
                 class="user-name body-text-large flex gap-5 items-center"
             >
-                Валентина Латышева
+                {{ `${first_name} ${last_name}` }}
                 <SearchStatus
                     v-if="inSearch"
                     class="flex justify-center items-center text-nowrap text-center"

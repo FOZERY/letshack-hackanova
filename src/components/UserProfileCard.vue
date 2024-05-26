@@ -16,11 +16,9 @@
         </div>
 
         <div class="team-item-name body-text-large">
-            {{ name }}
+            {{ `${first_name} ${last_name}` }}
             <p class="body-text-small mt-2">
-                {{
-                    `В команде с  ${new Date(inviteTime).toLocaleDateString()}`
-                }}
+                {{ `В команде с  ${new Date().toLocaleDateString()}` }}
             </p>
         </div>
     </a>
@@ -29,7 +27,7 @@
 <script setup>
 const props = defineProps({
     id: { type: Number, default: null },
-    name: { type: String, default: null },
-    inviteTime: { type: Number, default: null },
+    first_name: { type: String, default: null },
+    last_name: { type: String, default: null },
 });
 </script>
