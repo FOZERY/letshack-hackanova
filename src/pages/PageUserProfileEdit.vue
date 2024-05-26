@@ -8,6 +8,7 @@ import { useUserStore } from '@/stores/userStore.js';
 
 import { onMounted, reactive } from 'vue';
 import deepClone from 'lodash.clonedeep';
+import router from '@/router/index.js';
 
 const userStore = useUserStore();
 const tagStore = useTagStore();
@@ -18,6 +19,14 @@ const addTagToUser = (tag) => {
 
 const deleteTagFromUser = (tag) => {
     tag.isAdded = false;
+};
+
+const updateUserData = async () => {
+    try {
+        await router.push({ name: 'profile' });
+    } catch (e) {
+        console.log(e);
+    }
 };
 
 userStore.fetchUser();
@@ -258,6 +267,7 @@ onMounted(() => {
                             <button
                                 type="submit"
                                 class="submit-button button button__block button__filled button__large"
+                                @click.prevent="updateUserData"
                             >
                                 <span class="loader"></span>
                                 <span>Сохранить изменения</span>

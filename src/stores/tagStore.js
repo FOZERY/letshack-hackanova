@@ -44,6 +44,7 @@ export const useTagStore = defineStore('tagStore', {
         getAddedTags: (state) => {
             return state.tags.filter((tag) => tag.isAdded).sort(compareTagsFn);
         },
+        // Можно будет переделать через SET и userStore
         getNotAddedTags: (state) => {
             return state.tags.filter((tag) => !tag.isAdded).sort(compareTagsFn);
         },

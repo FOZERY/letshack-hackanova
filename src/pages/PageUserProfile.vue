@@ -109,6 +109,17 @@ userStore.fetchUser();
                     </div>
 
                     <hr />
+                    <p class="body-text-medium">Специализация</p>
+                    <div class="flex gap-5">
+                        <TagButton
+                            v-for="tag in userStore.user.tags"
+                            :key="tag.id"
+                            class="select-none"
+                            v-bind="tag"
+                        />
+                    </div>
+
+                    <hr />
                     <p class="body-text-medium mt-4">
                         Опыт участия в хакатонах
                     </p>
@@ -129,17 +140,6 @@ userStore.fetchUser();
                     </div>
 
                     <!--         Наш код           -->
-
-                    <hr />
-                    <p class="body-text-medium mt-8">Специализация</p>
-                    <div class="flex mt-8 gap-5">
-                        <TagButton
-                            v-for="tag in userStore.user.tags"
-                            :key="tag.id"
-                            class="select-none"
-                            v-bind="tag"
-                        />
-                    </div>
                 </div>
             </div>
         </div>
