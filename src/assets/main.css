@@ -81433,13 +81433,13 @@ label {
     background-color: #ffffff;
     color: #7c8db0;
 }
-.mobile-menu .menu-nav .nav-item.active .nav-link .stroke-hover {
+.mobile-menu .menu-nav .nav-item.router-link-active .nav-link .stroke-hover {
     stroke: #00a3ff;
 }
-.mobile-menu .menu-nav .nav-item.active .nav-link .fill-hover {
+.mobile-menu .menu-nav .nav-item.router-link-active .nav-link .fill-hover {
     fill: #00a3ff;
 }
-.mobile-menu .menu-nav .nav-item.active .nav-link p {
+.mobile-menu .menu-nav .nav-item.router-link-active .nav-link p {
     font-weight: 700;
     color: #00a3ff;
 }
@@ -81604,16 +81604,16 @@ label {
     background-color: #ffffff;
     color: #7c8db0;
 }
-.sidebar .sidebar-nav .nav .nav-item.active {
+    .sidebar .sidebar-nav .nav .nav-item .router-link-active {
     border-right: 4px solid #00a3ff;
 }
-.sidebar .sidebar-nav .nav .nav-item.active .nav-link .stroke-hover {
+.sidebar .sidebar-nav .nav .nav-item  .nav-link .nav-link.router-link-active .stroke-hover  {
     stroke: #00a3ff;
 }
-.sidebar .sidebar-nav .nav .nav-item.active .nav-link .fill-hover {
+.sidebar .sidebar-nav .nav .nav-item  .nav-link .nav-link.router-link-active .fill-hover {
     fill: #00a3ff;
 }
-.sidebar .sidebar-nav .nav .nav-item.active .nav-link p {
+.sidebar .sidebar-nav .nav .nav-item .nav-link.router-link-active .nav-link p {
     font-weight: 700;
     color: #020202;
 }

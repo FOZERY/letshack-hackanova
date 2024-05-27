@@ -1,4 +1,8 @@
-<script setup></script>
+<script setup>
+import { useUserStore } from '@/stores/userStore.js';
+
+const userStore = useUserStore();
+</script>
 
 <template>
     <aside class="sidebar body-text-medium">
@@ -8,7 +12,7 @@
             </div>
 
             <div class="user-info">
-                <div class="user-name">Username</div>
+                <div class="user-name"></div>
                 <a class="logout">
                     <svg
                         class="stroke-hover"
@@ -58,7 +62,7 @@
                 role="menu"
                 data-accordion="false"
             >
-                <li class="nav-item active">
+                <li class="nav-item">
                     <router-link :to="{ name: 'home' }" class="nav-link">
                         <svg
                             class="stroke-hover"
