@@ -1,14 +1,10 @@
 <script setup>
 import TheAside from '@/components/TheAside.vue';
 import { useUserStore } from '@/stores/userStore.js';
-import { onMounted } from 'vue';
 
 const userStore = useUserStore();
 
 const userIdTest = 6;
-onMounted(() => {
-    userStore.fetchUser(userIdTest);
-});
 </script>
 
 <template>

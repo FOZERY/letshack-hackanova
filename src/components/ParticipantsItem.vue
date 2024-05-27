@@ -7,7 +7,7 @@ const props = defineProps({
     first_name: { type: String, default: '' },
     last_name: { type: String, default: '' },
     status_team: { type: String, default: '' },
-    tags: { type: Array, default: [] },
+    tags: { type: Array, default: null },
     telegram: { type: String, default: '' },
     vk: { type: String, default: '' },
     github: { type: String, default: '' },
@@ -18,7 +18,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="teams-item" data-name="{SVET}" data-id="">
+    <div class="teams-item cursor-pointer" data-name="{SVET}" data-id="">
         <div class="team-link team-wrapper">
             <div class="team-title flex gap-5 items-center">
                 <div class="user w-16 h-16">
