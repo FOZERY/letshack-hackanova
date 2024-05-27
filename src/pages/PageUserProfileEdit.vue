@@ -78,7 +78,7 @@ onMounted(() => {
                         <h5>Контактные данные</h5>
                         <div class="form-block">
                             <AppInput
-                                v-model="userFormData.second_name"
+                                v-model="userFormData.last_name"
                                 :title="'Фамилия*'"
                             />
                             <AppInput
@@ -101,10 +101,7 @@ onMounted(() => {
                                 :title="'Город*'"
                                 :placeholder="'Город'"
                             />
-                            <AppInput
-                                v-model="userFormData.education"
-                                :title="'Ваш уровень'"
-                            />
+
                             <AppInput
                                 v-model="userFormData.job_search"
                                 :title="'Вы находитесь в поиске работы?'"

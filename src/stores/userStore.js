@@ -36,7 +36,7 @@ export const useUserStore = defineStore('userStore', {
         async updateUser(userData) {
             try {
                 const response = await fetch(
-                    `/api/user/${userData.id}/update-Profile`,
+                    `/api/user/${userData.id}/update-profile`,
                     {
                         method: 'PUT',
                         headers: {
