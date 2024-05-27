@@ -5,7 +5,7 @@ import { useUserStore } from '@/stores/userStore.js';
 import SearchStatus from '@/components/SearchStatus.vue';
 
 const userStore = useUserStore();
-const userIdTest = 6;
+const userIdTest = 1;
 await userStore.fetchUser(userIdTest);
 </script>
 

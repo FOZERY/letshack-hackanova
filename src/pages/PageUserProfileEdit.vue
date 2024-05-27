@@ -21,7 +21,7 @@ const deleteTagFromUser = (tag) => {
     tag.isAdded = false;
 };
 
-const userIdTest = 6;
+const userIdTest = 1;
 const updateUserData = async () => {
     try {
         const tags = tagStore.getAddedTags.map((tag) => tag.name);
